@@ -18,20 +18,23 @@ smartvpn_logger()
 
 smartvpn_ipset_delete()
 {
-    ipset flush ip_oversea
-    ipset destroy ip_oversea
-    ipset flush net_oversea
-    ipset destroy net_oversea
 
-    ipset flush ip_hongkong
-    ipset destroy ip_hongkong
-    ipset flush net_hongkong
-    ipset destroy net_hongkong
+    if [[ "$SOFT" != "soft" ]]; then
+        ipset flush ip_oversea
+        ipset destroy ip_oversea
+        ipset flush net_oversea
+        ipset destroy net_oversea
 
-    ipset flush ip_mainland
-    ipset destroy ip_mainland
-    ipset flush net_mainland
-    ipset destroy net_mainland
+        ipset flush ip_hongkong
+        ipset destroy ip_hongkong
+        ipset flush net_hongkong
+        ipset destroy net_hongkong
+
+        ipset flush ip_mainland
+        ipset destroy ip_mainland
+        ipset flush net_mainland
+        ipset destroy net_mainland
+    fi
 
     return
 }
@@ -40,20 +43,17 @@ smartvpn_ipset_create()
 {
 
     ipset list | grep ip_oversea  > /dev/null 2>&1
-    if [ $? -ne 0 ]; then
-        smartvpn_logger "creating ipset for individual host..."
-        ipset create ip_oversea  hash:ip > /dev/null 2>&1
-        ipset create ip_hongkong  hash:ip > /dev/null 2>&1
-        ipset create ip_mainland  hash:ip > /dev/null 2>&1
+    smartvpn_logger "creating ipset for individual host..."
+    ipset create ip_oversea  hash:ip > /dev/null 2>&1
+    ipset create ip_hongkong  hash:ip > /dev/null 2>&1
+    ipset create ip_mainland  hash:ip > /dev/null 2>&1
+    if [[ "$SOFT" != "soft" ]]; then
+        smartvpn_logger "Flushing ipset for individual host..."
+        ipset flush ip_oversea
+        ipset flush ip_hongkong
+        ipset flush ip_mainland
     else
-        if [[ "$SOFT" != "soft" ]]; then
-            smartvpn_logger "Flushing ipset for individual host..."
-            ipset flush ip_oversea
-            ipset flush ip_hongkong
-            ipset flush ip_mainland
-        else
-            smartvpn_logger "Start at soft mode: keep ipset for individual host"
-        fi
+        smartvpn_logger "Start at soft mode: keep ipset for individual host"
     fi
 }
 
@@ -152,9 +152,17 @@ smartvpn_open()
         return 1
     fi
 
+    if [ $vpn_status == "on" ];
+    then
+        smartvpn_logger "SmartVPN already on, try a soft restart..."
+        SOFT='soft'
+        smartvpn_close
+        sleep 3
+    fi
+
     smartvpn_enable
     
-    smartvpn_logger "smartvpn is on!"
+    smartvpn_logger "SmartVPN is on!"
     echo
 
     return
@@ -176,7 +184,7 @@ smartvpn_close()
     smartvpn_logger "Restarting mwan3..."
     /etc/init.d/mwan3 start > /dev/null 2>&1
 
-    smartvpn_logger "smartvpn is off!"
+    smartvpn_logger "SmartVPN is off!"
     echo
 
     return
@@ -238,7 +246,7 @@ SOFT=$2
 if [ ! -z "$SOFT" ]; then
     if [ "$SOFT" != "soft" ]; then
         echo
-        echo "***Error*** second parameter must be 'soft'"
+        echo "***Error*** second parameter only support 'soft'"
         OPT=""
     fi
 fi

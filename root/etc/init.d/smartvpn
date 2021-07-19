@@ -22,6 +22,9 @@ restart() {
 }
 
 reload() {
-        restart
-        return $?
+	logger -t softether "Stoping smartvpn(soft)..."
+	smartvpn.sh off soft
+	sleep3
+	logger -t softether "Starting smartvpn(soft)..."
+	smartvpn.sh on soft
 }
