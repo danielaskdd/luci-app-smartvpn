@@ -94,6 +94,10 @@ smartvpn_enable()
 
     # 根据proxy.txt生成dnsmasq配置
     gensmartdns.sh "/etc/smartvpn/proxy_oversea.txt" "/tmp/dm_oversea.conf" "/tmp/smartvpn_ip.txt" "ip_oversea" "8.8.8.8" > /dev/null 2>&1
+    if [ -f /etc/smartvpn/user_oversea.txt ]; then 
+        gensmartdns.sh "/etc/smartvpn/user_oversea.txt" "/tmp/dm_oversea.conf" "/tmp/smartvpn_ip.txt" "ip_oversea" "8.8.8.8" append > /dev/null 2>&1
+    fi 
+
 
     [ -f /tmp/smartvpn_ip.txt ] && {
         smartvpn_ipset_add_by_file /tmp/smartvpn_ip.txt net_oversea
@@ -102,6 +106,9 @@ smartvpn_enable()
     }
 
     gensmartdns.sh "/etc/smartvpn/proxy_hongkong.txt" "/tmp/dm_hongkong.conf" "/tmp/smartvpn_ip.txt" "ip_hongkong" "1.1.1.1" > /dev/null 2>&1
+    if [ -f /etc/smartvpn/user_hongkong.txt ]; then
+        gensmartdns.sh "/etc/smartvpn/user_hongkong.txt" "/tmp/dm_hongkong.conf" "/tmp/smartvpn_ip.txt" "ip_hongkong" "1.1.1.1" append > /dev/null 2>&1
+    fi
 
     [ -f /tmp/smartvpn_ip.txt ] && {
         smartvpn_ipset_add_by_file /tmp/smartvpn_ip.txt net_hongkong
@@ -110,6 +117,9 @@ smartvpn_enable()
     }
 
     gensmartdns.sh "/etc/smartvpn/proxy_mainland.txt" "/tmp/dm_mainland.conf" "/tmp/smartvpn_ip.txt" "ip_mainland" "119.29.29.29" > /dev/null 2>&1
+    if [ -f /etc/smartvpn/user_mainland.txt ]; then
+        gensmartdns.sh "/etc/smartvpn/user_mainland.txt" "/tmp/dm_mainland.conf" "/tmp/smartvpn_ip.txt" "ip_mainland" "119.29.29.29" append > /dev/null 2>&1
+    fi
 
     [ -f /tmp/smartvpn_ip.txt ] && {
         smartvpn_ipset_add_by_file /tmp/smartvpn_ip.txt net_mainland

@@ -2,14 +2,14 @@
 'require fs';
 'require ui';
 
-var filename = '/etc/smartvpn/proxy_hongkong.txt';
+var filename = '/etc/smartvpn/user_hongkong.txt';
 
 return L.view.extend({
 	load: function() {
 		return L.resolveDefault(fs.read_direct(filename), '');
 	},
 	handleSave: function(ev) {
-		var value = ((document.querySelector('textarea').value || '').trim().toLowerCase().replace(/\r\n/g, '\n').replace(/[^a-z0-9\.\-\#\n]/g, '')) + '\n';
+		var value = ((document.querySelector('textarea').value || '').trim().toLowerCase().replace(/\r\n/g, '\n')) + '\n';
 		return fs.write(filename, value)
 			.then(function(rc) {
 				document.querySelector('textarea').value = value;
@@ -21,8 +21,8 @@ return L.view.extend({
 	render: function(blacklist) {
 		return E([
 			E('p', {},
-				_('Listed below are the hosts must be accessed via Hongkong gateway.<br /> \
-				Please note: add only one domain per line. Comments introduced with \'#\' are allowed - ip addresses, wildcards and regex are not.')),
+				_('Listed below are your customized hosts must be accessed via Hongkong gateway.<br /> \
+				Please note: add only one domain per line. Make sure the hosts accessed much quicker from Hongkong.')),
 			E('p', {},
 				E('textarea', {
 					'style': 'width: 100% !important; padding: 5px; font-family: monospace',

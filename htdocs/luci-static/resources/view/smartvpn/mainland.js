@@ -2,14 +2,14 @@
 'require fs';
 'require ui';
 
-var filename = '/etc/smartvpn/proxy_mainland.txt';
+var filename = '/etc/smartvpn/user_mainland.txt';
 
 return L.view.extend({
 	load: function() {
 		return L.resolveDefault(fs.read_direct(filename), '');
 	},
 	handleSave: function(ev) {
-		var value = ((document.querySelector('textarea').value || '').trim().toLowerCase().replace(/\r\n/g, '\n').replace(/[^a-z0-9\.\-\#\n]/g, '')) + '\n';
+		var value = ((document.querySelector('textarea').value || '').trim().toLowerCase().replace(/\r\n/g, '\n')) + '\n';
 		return fs.write(filename, value)
 			.then(function(rc) {
 				document.querySelector('textarea').value = value;

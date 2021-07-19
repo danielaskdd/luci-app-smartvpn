@@ -2,14 +2,14 @@
 'require fs';
 'require ui';
 
-var filename = '/etc/smartvpn/proxy_oversea.txt';
+var filename = '/etc/smartvpn/user_oversea.txt';
 
 return L.view.extend({
 	load: function() {
 		return L.resolveDefault(fs.read_direct(filename), '');
 	},
 	handleSave: function(ev) {
-		var value = ((document.querySelector('textarea').value || '').trim().toLowerCase().replace(/\r\n/g, '\n').replace(/[^a-z0-9\.\-\#\n]/g, '')) + '\n';
+		var value = ((document.querySelector('textarea').value || '').trim().toLowerCase().replace(/\r\n/g, '\n')) + '\n';
 		return fs.write(filename, value)
 			.then(function(rc) {
 				document.querySelector('textarea').value = value;
@@ -21,8 +21,8 @@ return L.view.extend({
 	render: function(hostlist) {
 		return E([
 			E('p', {},
-				_('Listed below are the hosts should be accessed via oversea gateway.<br /> \
-				Please note: add only one domain or network segment per line. Comments introduced with \'#\' are allowed')),
+				_('Listed below are your customize hosts should be accessed via oversea gateway.<br /> \
+				Please note: add only one domain or network segment per line. The hosts in "gfwlist" no need to be added.')),
 			E('p', {},
 				E('textarea', {
 					'style': 'width: 100% !important; padding: 5px; font-family: monospace',

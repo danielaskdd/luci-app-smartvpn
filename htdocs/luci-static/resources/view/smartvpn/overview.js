@@ -133,19 +133,19 @@ return L.view.extend({
 				var info = res;			/* 拆分显示内容 */
 				var status = document.getElementById('status');
 				if (info && res) {
-					status.textContent = info;
+					status.textContent = "SmartVPN is ON";
 				}
 				var mainland = document.getElementById('mainland');
 				if (mainland && res) {
-					mainland.textContent = '100';
+					mainland.textContent = 'match 100 （snapshoted: 98)';
 				}
 				var hongkong = document.getElementById('hongkong');
 				if (hongkong && res) {
-					hongkong.textContent = '99';
+					hongkong.textContent = 'match 90 （snapshoted: 78)';
 				}
 				var oversea = document.getElementById('oversea');
 				if (oversea && res) {
-					oversea.textContent = '98';
+					oversea.textContent = 'match 35 （snapshoted: 29)';
 				}
 			});
 		}, 1);
@@ -208,7 +208,7 @@ return L.view.extend({
 		*/
 		s = m.section(form.NamedSection, 'global', 'adblock', _('Settings'));
 		s.addremove = false;
-		o = s.option(form.Flag, 'vpn_enabled', _('Enabled'), _('Enable the adblock service.'));
+		o = s.option(form.Flag, 'vpn_enabled', _('Enabled'), _('Enable SmartVPN service.'));
 		o.rmempty = false;
 		return m.render();
 	},

@@ -13,10 +13,11 @@ domain_file=$2
 ip_file=$3
 ipset_name=$4
 dnsserver=$5
+append=$6
 
 usage()
 {
-    echo "gensmartdns.sh rule_file domain_file ip_file ipset_name [dnsserver]"
+    echo "gensmartdns.sh rule_file domain_file ip_file ipset_name [dnsserver] [append]"
     echo "-- rule_file : must specify"
     echo "-- domain_file : must specify, writable, domain list output"
     echo "-- ip_file : must specify, writable, ip list output"
@@ -54,10 +55,12 @@ format2domain()
     local _dmf=$2
     local _ipf=$3
 
-    echo "" > $_dmf
-    echo "" > $_ipf
+    [ -z $append ] && {
+        echo "" > $_dmf
+        echo "" > $_ipf
+    }
 
-    cat $_rule | while read line
+    cat $_rule | while read line || [ -n "$line" ]
     do
         if [ -n "$line" ]; then
             if [[ "${line:0:1}" = "." ]]; then
