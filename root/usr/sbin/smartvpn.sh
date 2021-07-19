@@ -190,6 +190,50 @@ smartvpn_close()
     return
 }
 
+smartvpn_status()
+{
+    if [ $softether_status == "stop" ]; then
+        echo "VPN tunnel missing"
+    else
+        if [ $vpn_status == "on" ]; then
+            echo "SmartVPN is ON"
+        else
+            echo "SmartVPN is OFF"
+        fi
+    fi
+
+    if [ $vpn_status == "on" ]; then
+
+        mlip=`ipset list ip_mainland | grep "Number of entries" | awk '{print $4}'`
+        hkip=`ipset list ip_hongkong | grep "Number of entries" | awk '{print $4}'`
+        osip=`ipset list ip_oversea | grep "Number of entries" | awk '{print $4}'`
+
+        saved_mlip=0
+        saved_hkip=0
+        saved_osip=0
+
+        if [ -f /etc/smartvpn/user_ipset.sav ]; then
+            saved_mlip=`grep "ip_mainland" /etc/smartvpn/user_ipset.sav | wc -l`
+            saved_hkip=`grep "ip_hongkong" /etc/smartvpn/user_ipset.sav | wc -l`
+            saved_osip=`grep "ip_oversea" /etc/smartvpn/user_ipset.sav | wc -l`
+        fi
+
+        if [[ "$SHORT" == "short" ]]; then
+            echo "match $mlip (snapshot: $saved_mlip)"
+            echo "match $hkip (snapshot: $saved_hkip)"
+            echo "match $osip (snapshot: $saved_osip)"
+        else
+            echo "Mainland ip match $mlip (snapshot: $saved_mlip)"
+            echo "Hongkong ip match $hkip (snapshot: $saved_hkip)"
+            echo "Oversea ip  macth $osip (snapshot: $saved_osip)"
+        fi
+
+    else
+        echo "-"
+        echo "-"
+        echo "-"
+    fi
+}
 
 vpn_status_get()
 {
@@ -223,6 +267,8 @@ softether_status_get()
 smartvpn_usage()
 {
     echo "usage: smartvpn.sh on|off [soft]"
+    echo "       smartvpn.sh status [short]"
+    echo "       smartvpn.sh save|restore"
     echo ""
     echo "softether status = $softether_status"
     echo "smartvpn status = $vpn_status"
@@ -242,18 +288,29 @@ config_get smartvpn_cfg_switch vpn switch &>/dev/null;
 
 OPT=$1
 SOFT=$2
+SHORT=$2
 
-if [ ! -z "$SOFT" ]; then
-    if [ "$SOFT" != "soft" ]; then
-        echo
-        echo "***Error*** second parameter only support 'soft'"
-        OPT=""
-    fi
-fi
+case $OPT in
+    on|off)
+        if [[ ! -z "$SOFT" && "$SOFT" != "soft" ]]; then
+            echo "***Error*** second parameter only support 'soft'"
+            return 1
+        fi
+    ;;
+
+    status)
+        if [[ ! -z "$SHORT" && "$SHORT" != "short" ]]; then
+            echo "***Error*** second parameter only support 'short'"
+            return 1
+        fi
+    ;;
+esac
+
 
 smartvpn_lock="/var/run/softether_vpn.lock"
 trap "lock -u $smartvpn_lock; exit 1" SIGHUP SIGINT SIGTERM
 lock $smartvpn_lock
+
 
 case $OPT in
     on)
@@ -266,6 +323,12 @@ case $OPT in
         smartvpn_close
         lock -u $smartvpn_lock
         return $?
+    ;;
+
+    status)
+        smartvpn_status
+        lock -u $smartvpn_lock
+        return $?               
     ;;
 
     *)
