@@ -1,0 +1,27 @@
+#!/bin/sh /etc/rc.common
+
+START=96
+STOP=96
+
+PATH=/opt/sbin:/opt/bin:/opt/usr/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+start() {
+	logger -t softether "Starting smartvpn..."
+	smartvpn.sh on
+}
+
+stop() {
+	logger -t softether "Stoping smartvpn..."
+	smartvpn.sh off
+}
+
+restart() {
+	stop
+	sleep3
+	start
+}
+
+reload() {
+        restart
+        return $?
+}

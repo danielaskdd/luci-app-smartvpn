@@ -1,0 +1,2 @@
+config smartvpn 'global'
+	option vpn_enabled '1'

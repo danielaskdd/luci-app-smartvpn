@@ -1,0 +1,24 @@
+{
+	"luci-app-smartvpn": {
+		"description": "Grant access to LuCI app smartvpn",
+		"write": {
+			"uci": [ "smartvpn" ],
+			"cgi-io": [ "upload" ],
+			"file": {
+				"/etc/smartvpn/proxy*": [ "write" ]
+			}
+		},
+		"read": {
+			"uci": [ "smartvpn" ],
+			"cgi-io": [ "download", "exec" ],
+			"file": {
+				"/etc/smartvpn/proxy*": [ "read" ],
+				"/var/run/softether_vpn.lock": [ "read" ],
+				"/etc/init.d/smartvpn start" : [ "exec" ],
+				"/etc/init.d/smartvpn stop" : [ "exec" ],
+				"/etc/init.d/smartvpn restart" : [ "exec" ],
+				"/etc/init.d/smartvpn reload" : [ "exec" ]
+			}
+		}
+	}
+}
