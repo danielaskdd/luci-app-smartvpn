@@ -1,4 +1,4 @@
-# Copyright 2017-2020 Dirk Brenken (dev@brenken.org)
+# Copyright 2021 Daniel Yang (gzdaniel@me.com)
 # This is free software, licensed under the Apache License, Version 2.0
 
 include $(TOPDIR)/rules.mk
