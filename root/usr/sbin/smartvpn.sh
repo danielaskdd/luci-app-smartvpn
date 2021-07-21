@@ -91,14 +91,6 @@ smartdns_conf_path="/etc/smartvpn/"
 smartvpn_enable()
 {
 
-    ifdown lanman
-    ifdown vpnhub01
-    ifdown vpnhub02
-
-    ifup lanman
-    ifup vpnhub01
-    ifup vpnhub02
-
     # 根据proxy.txt生成dnsmasq配置
     gensmartdns.sh "/etc/smartvpn/proxy_oversea.txt" "/tmp/dm_oversea.conf" "/tmp/smartvpn_ip.txt" "ip_oversea" "8.8.8.8" > /dev/null 2>&1
     if [ -f /etc/smartvpn/user_oversea.txt ]; then 
@@ -161,6 +153,20 @@ smartvpn_open()
         return 1
     fi
 
+    ifdown lanman
+    ifdown vpnhub01
+    ifdown vpnhub02
+
+    ifup lanman
+    ifup vpnhub01
+    ifup vpnhub02
+
+    network_is_up lanman
+    if [ $? -ne 0 ]; then
+        smartvpn_logger "softether tap interface is missing."
+        return 2
+    fi
+
     smartvpn_enable
     
     smartvpn_logger "SmartVPN is on!"
@@ -195,13 +201,20 @@ smartvpn_close()
 
 smartvpn_status()
 {
+    local _savefile="/etc/smartvpn/user_ipset.sav"
+
     if [ $softether_status == "stop" ]; then
-        echo "VPN tunnel missing"
+        echo "VPN service is missing"
     else
-        if [ $vpn_status == "on" ]; then
-            echo "SmartVPN is ON"
+        network_is_up lanman
+        if [ $? -ne 0 ]; then
+            echo "VPN tunnel is missing"
         else
-            echo "SmartVPN is OFF"
+            if [ $vpn_status == "on" ]; then
+                echo "SmartVPN is ON"
+            else
+                echo "SmartVPN is OFF"
+            fi
         fi
     fi
 
@@ -215,10 +228,10 @@ smartvpn_status()
         saved_hkip=0
         saved_osip=0
 
-        if [ -f /etc/smartvpn/user_ipset.sav ]; then
-            saved_mlip=`grep "ip_mainland" /etc/smartvpn/user_ipset.sav | wc -l`
-            saved_hkip=`grep "ip_hongkong" /etc/smartvpn/user_ipset.sav | wc -l`
-            saved_osip=`grep "ip_oversea" /etc/smartvpn/user_ipset.sav | wc -l`
+        if [ -f $_savefile ]; then
+            saved_mlip=`grep "add ip_mainland" $_savefile | wc -l`
+            saved_hkip=`grep "add ip_hongkong" $_savefile | wc -l`
+            saved_osip=`grep "add ip_oversea" $_savefile | wc -l`
         fi
 
         if [[ "$SHORT" == "short" ]]; then
@@ -238,15 +251,32 @@ smartvpn_status()
     fi
 }
 
+smartvpn_saveipset()
+{
+    local _savefile="/etc/smartvpn/user_ipset.sav"
+
+    echo "Saving ipset to $_savefile"
+    ipset save net_hongkong >  $_savefile
+    ipset save ip_hongkong  >> $_savefile
+    ipset save net_oversea  >> $_savefile
+    ipset save ip_oversea   >> $_savefile
+    ipset save ip_mainland  >> $_savefile
+    ipset save net_mainland >> $_savefile
+}
+
+smartvpn_restoreipset()
+{
+
+    local _savefile="/etc/smartvpn/user_ipset.sav"
+
+    echo "Restoring ipset from $_savefile"
+    ipset restore -! < $_savefile
+}
+
+
+
 vpn_status_get()
 {
-    # network_is_up lanman
-    # if [ $? -eq 0 ]; then
-    #     vpn_status="up"
-    # else
-    #     vpn_status="down"
-    # fi
-
     if [ -f /tmp/dnsmasq.d/dm_oversea.conf ]; then
         vpn_status="on"
     else
@@ -259,7 +289,8 @@ vpn_status_get()
 softether_status_get()
 {
     __tmpPID=$(ps | grep "vpnserver" | grep -v "grep vpnserver" | awk '{print $1}' 2>/dev/null)
-    if  [ -n "$__tmpPID" ]; then
+
+    if [[ -n "$__tmpPID" ]]; then
         softether_status="start"
     else
         softether_status="stop"
@@ -321,33 +352,32 @@ smartvpn_lock="/var/run/smartvpn.lock"
 trap "lock -u $smartvpn_lock; exit 1" SIGHUP SIGINT SIGTERM
 lock $smartvpn_lock
 
-
 case $OPT in
     on)
         smartvpn_open
-        lock -u $smartvpn_lock
-        rm $smartvpn_lock
-        return
     ;;
 
     off)
         smartvpn_close
-        lock -u $smartvpn_lock
-        rm $smartvpn_lock
-        return
     ;;
 
     status)
         smartvpn_status
-        lock -u $smartvpn_lock
-        rm $smartvpn_lock
-        return
+    ;;
+
+    save)
+        smartvpn_saveipset
+    ;;
+
+    restore)
+        smartvpn_restoreipset
     ;;
 
     *)
         smartvpn_usage
-        lock -u $smartvpn_lock
-        rm $smartvpn_lock
-        return
     ;;
 esac
+
+lock -u $smartvpn_lock
+rm $smartvpn_lock
+

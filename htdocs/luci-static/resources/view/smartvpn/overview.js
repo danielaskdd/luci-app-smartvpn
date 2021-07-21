@@ -27,6 +27,21 @@ async function handleAction(ev) {
 			})
 		}
 	}
+	if (ev === 'save' || ev === 'restore') {
+		L.Poll.start();   //确保页面开启刷新
+
+		fs.exec_direct('/usr/sbin/smartvpn.sh', [ev]);
+
+		var running = 1;
+		while (running === 1) {
+			await new Promise(r => setTimeout(r, 1000));
+			L.resolveDefault(fs.read_direct('/var/run/smartvpn.lock')).then(function(res) {
+				if (!res) {
+					running = 0;
+				}
+			})
+		}
+	}
 }
 
 return L.view.extend({
@@ -108,7 +123,7 @@ return L.view.extend({
 						'class': 'cbi-button cbi-button-apply',
 						'id': 'btn_snapshot',
 						'click': ui.createHandlerFn(this, function() {
-							return handleAction('snapshot');
+							return handleAction('save');
 						})
 					}, [ _('Save snapshot') ]),
 					'\xa0\xa0\xa0',

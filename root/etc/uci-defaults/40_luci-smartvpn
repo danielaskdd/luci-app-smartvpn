@@ -1,0 +1,11 @@
+#!/bin/sh
+
+uci -q batch <<-EOF >/dev/null
+	delete ucitrack.@smartvpn[-1]
+	add ucitrack smartvpn
+	set ucitrack.@smartvpn[-1].init=smartvpn
+	commit ucitrack
+EOF
+
+rm -f /tmp/luci-indexcache
+exit 0
