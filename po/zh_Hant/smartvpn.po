@@ -5,24 +5,24 @@ msgstr "Content-Type: text/plain; charset=UTF-8"
 #: applications/luci-app-smartvpn/htdocs/luci-static/resources/view/smartvpn/mainland.js:16
 #: applications/luci-app-smartvpn/htdocs/luci-static/resources/view/smartvpn/oversea.js:16
 msgid "Changes have been saved. You should restart SmartVPN to take effect."
-msgstr "修改已经保存。重新启动SmartVPN后配置生效"
+msgstr "修改已經保存。重新啟動SmartVPN後配置生效"
 
 #: applications/luci-app-smartvpn/htdocs/luci-static/resources/view/smartvpn/overview.js:164
 msgid "Enable SmartVPN service."
-msgstr "启动SmartVPN服务"
+msgstr "啟動SmartVPN服務"
 
 #: applications/luci-app-smartvpn/htdocs/luci-static/resources/view/smartvpn/overview.js:164
 msgid "Enabled"
-msgstr "启动"
+msgstr "啟動"
 
 #: applications/luci-app-smartvpn/htdocs/luci-static/resources/view/smartvpn/overview.js:144
 msgid "Hard restart"
-msgstr "硬启动"
+msgstr "硬啟動"
 
 #: applications/luci-app-smartvpn/luasrc/controller/smartvpn.lua:9
 #: applications/luci-app-smartvpn/root/usr/share/luci/menu.d/luci-app-smartvpn.json:34
 msgid "Hongkong hosts"
-msgstr "香港主机"
+msgstr "香港主機"
 
 #: applications/luci-app-smartvpn/htdocs/luci-static/resources/view/smartvpn/overview.js:116
 msgid "Hongkong ips"
@@ -38,9 +38,9 @@ msgid ""
 "router.<br /> Please note: add only one domain or network segment per line. "
 "Add only hosts pick a wrong getway via oversea or hongkong"
 msgstr ""
-"以下是必须从路由默认网关访问的主机"
-"清单。<br /> 注意：每行一个主机或网段。"
-"仅需要添加错误选择了海外或香港网关的主机"
+"以下是必須從路由默認網關訪問的主機"
+"清單。<br /> 註意：每行一個主機或網段。"
+"僅需要添加錯誤選擇了海外或香港網關的主機"
 
 #: applications/luci-app-smartvpn/htdocs/luci-static/resources/view/smartvpn/oversea.js:24
 msgid ""
@@ -48,9 +48,9 @@ msgid ""
 "<br /> Please note: add only one domain or network segment per line. The "
 "hosts in \"gfwlist\" no need to be added."
 msgstr ""
-"以下是应该通过海外网关访问的主机"
-"清单。<br /> 注意：每行一个主机或网段。"
-"已经在 \"gfwlist\"中的主机不需要添加进去"
+"以下是應該通過海外網關訪問的主機"
+"清單。<br /> 註意：每行一個主機或網段。"
+"已經在 \"gfwlist\"中的主機不需要添加進去"
 
 #: applications/luci-app-smartvpn/htdocs/luci-static/resources/view/smartvpn/hongkong.js:24
 msgid ""
@@ -58,23 +58,23 @@ msgid ""
 "<br /> Please note: add only one domain per line. Make sure the hosts "
 "accessed much quicker from Hongkong."
 msgstr ""
-"以下是必须通过香港网关访问的主机"
-"清单。<br /> 注意：每行一个主机或网段。"
-"仅需添加从香港访问速度明显更快的主机"
+"以下是必須通過香港網關訪問的主機"
+"清單。<br /> 註意：每行一個主機或網段。"
+"僅需添加從香港訪問速度明顯更快的主機"
 
 #: applications/luci-app-smartvpn/luasrc/controller/smartvpn.lua:8
 #: applications/luci-app-smartvpn/root/usr/share/luci/menu.d/luci-app-smartvpn.json:26
 msgid "Mainland hosts"
-msgstr "内地主机"
+msgstr "內地主機"
 
 #: applications/luci-app-smartvpn/htdocs/luci-static/resources/view/smartvpn/overview.js:113
 msgid "Mainland ips"
-msgstr "内地ip"
+msgstr "內地ip"
 
 #: applications/luci-app-smartvpn/luasrc/controller/smartvpn.lua:10
 #: applications/luci-app-smartvpn/root/usr/share/luci/menu.d/luci-app-smartvpn.json:42
 msgid "Oversea hosts"
-msgstr "海外主机"
+msgstr "海外主機"
 
 #: applications/luci-app-smartvpn/htdocs/luci-static/resources/view/smartvpn/overview.js:119
 msgid "Oversea ips"
@@ -83,17 +83,17 @@ msgstr "海外ip"
 #: applications/luci-app-smartvpn/luasrc/controller/smartvpn.lua:7
 #: applications/luci-app-smartvpn/root/usr/share/luci/menu.d/luci-app-smartvpn.json:18
 msgid "Overview"
-msgstr "概览"
+msgstr "概覽"
 
 #: applications/luci-app-smartvpn/htdocs/luci-static/resources/view/smartvpn/hongkong.js:39
 #: applications/luci-app-smartvpn/htdocs/luci-static/resources/view/smartvpn/mainland.js:39
 #: applications/luci-app-smartvpn/htdocs/luci-static/resources/view/smartvpn/oversea.js:39
 msgid "Restore hosts list to original content"
-msgstr "已把主机清单恢复为原来的内容"
+msgstr "已把主機清單恢復為原來的內容"
 
 #: applications/luci-app-smartvpn/htdocs/luci-static/resources/view/smartvpn/overview.js:136
 msgid "Restore snapshot"
-msgstr "恢复快照"
+msgstr "恢復快照"
 
 #: applications/luci-app-smartvpn/htdocs/luci-static/resources/view/smartvpn/overview.js:128
 msgid "Save snapshot"
@@ -101,11 +101,11 @@ msgstr "保存快照"
 
 #: applications/luci-app-smartvpn/htdocs/luci-static/resources/view/smartvpn/overview.js:57
 msgid "Select the best route for Internet Access."
-msgstr "选择互联网访问的最佳路由"
+msgstr "選擇互聯網訪問的最佳路由"
 
 #: applications/luci-app-smartvpn/htdocs/luci-static/resources/view/smartvpn/overview.js:162
 msgid "Settings"
-msgstr "设置"
+msgstr "設置"
 
 #: applications/luci-app-smartvpn/luasrc/controller/smartvpn.lua:6
 #: applications/luci-app-smartvpn/root/usr/share/luci/menu.d/luci-app-smartvpn.json:3
@@ -114,28 +114,28 @@ msgstr "SmartVPN"
 
 #: applications/luci-app-smartvpn/htdocs/luci-static/resources/view/smartvpn/overview.js:152
 msgid "Soft restart"
-msgstr "软重启"
+msgstr "軟重啟"
 
 #: applications/luci-app-smartvpn/htdocs/luci-static/resources/view/smartvpn/overview.js:110
 msgid "Status"
-msgstr "状态"
+msgstr "狀態"
 
 #: applications/luci-app-smartvpn/htdocs/luci-static/resources/view/smartvpn/overview.js:167
 msgid "The DNS ip from your ISP or fastest DNS for mainland getway."
-msgstr "用户内地主机的DNS服务器ip（来自你的ISP或当地访问速度最快的DNS）"
+msgstr "用戶內地主機的DNS服務器ip（來自你的ISP或當地訪問速度最快的DNS）"
 
 #: applications/luci-app-smartvpn/htdocs/luci-static/resources/view/smartvpn/hongkong.js:41
 #: applications/luci-app-smartvpn/htdocs/luci-static/resources/view/smartvpn/mainland.js:41
 #: applications/luci-app-smartvpn/htdocs/luci-static/resources/view/smartvpn/oversea.js:41
 msgid "Unable to read file: %s"
-msgstr "无法读取文件：%s"
+msgstr "無法讀取文件：%s"
 
 #: applications/luci-app-smartvpn/htdocs/luci-static/resources/view/smartvpn/hongkong.js:18
 #: applications/luci-app-smartvpn/htdocs/luci-static/resources/view/smartvpn/mainland.js:18
 #: applications/luci-app-smartvpn/htdocs/luci-static/resources/view/smartvpn/oversea.js:18
 msgid "Unable to save changes: %s"
-msgstr "无法保存文件：%s"
+msgstr "無法保存文件：%s"
 
 #: applications/luci-app-smartvpn/htdocs/luci-static/resources/view/smartvpn/overview.js:167
 msgid "mainland DNS"
-msgstr "内地DNS"
+msgstr "內地DNS"

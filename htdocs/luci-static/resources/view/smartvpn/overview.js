@@ -159,7 +159,7 @@ return L.view.extend({
 		/*
 			config section
 		*/
-		s = m.section(form.NamedSection, 'global', 'adblock', _('Settings'));
+		s = m.section(form.NamedSection, 'global', 'smartvpn', _('Settings'));
 		s.addremove = false;
 		o = s.option(form.Flag, 'vpn_enable', _('Enabled'), _('Enable SmartVPN service.'));
 		o.rmempty = false;

@@ -22,7 +22,7 @@ return L.view.extend({
 		return E([
 			E('p', {},
 				_('Listed below are the hosts must be accessed via default gateway of your router.<br /> \
-				Please note: add only one domain or network segment per line. Comments introduced with \'#\' are allowed')),
+				Please note: add only one domain or network segment per line. Add only hosts pick a wrong getway via oversea or hongkong')),
 			E('p', {},
 				E('textarea', { 'id': 'hostlist',
 					'style': 'width: 100% !important; padding: 5px; font-family: monospace',
