@@ -5,26 +5,55 @@ STOP=96
 
 PATH=/opt/sbin:/opt/bin:/opt/usr/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
+config_load smartvpn
+config_get VPN_ENABLE global vpn_enable 0
+
+ipset_create(){
+    local _ipset=$1
+    local _type=${2:-ip}
+
+    ipset list | grep $_ipset > /dev/null 2>&1
+    if [ $? -ne 0 ]; then
+        ipset create $_ipset hash:$_type > /dev/null 2>&1
+    else
+        [[ "$2" != "soft" ]] && ipset flush $_ipset
+    fi    
+}
+
 start() {
-	logger -t softether "Starting smartvpn..."
-	smartvpn.sh on
+	# should create ipsest anyway
+	ipset_create ip_oversea
+    ipset_create ip_hongkong
+    ipset_create ip_mainland
+	ipset_create net_oversea net
+    ipset_create net_hongkong net
+    ipset_create net_mainland net
+
+	if [ $VPN_ENABLE == 1 ]; then
+		logger -s -t softether "Stoping SmartVPN..."
+		smartvpn.sh on hard
+	else
+		logger -s -t softether "SmartVPN is disabled"
+	fi
 }
 
 stop() {
-	logger -t softether "Stoping smartvpn..."
+	logger -s -t softether "Stoping SmartVPN..."
 	smartvpn.sh off
 }
 
 restart() {
-	stop
-	sleep3
+	# stop
+	# sleep3
 	start
 }
 
 reload() {
-	logger -t softether "Stoping smartvpn(soft)..."
-	smartvpn.sh off soft
-	sleep3
-	logger -t softether "Starting smartvpn(soft)..."
-	smartvpn.sh on soft
+	if [ $VPN_ENABLE == 1 ]; then
+		logger -s -t softether "Reloading SmartVPN...（soft）"
+		smartvpn.sh on
+	else
+		logger -s -t softether "Stoping SmartVPN..."
+		smartvpn.sh off
+	fi
 }

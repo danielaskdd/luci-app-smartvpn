@@ -16,45 +16,59 @@ smartvpn_logger()
     logger -s -t softether_vpn "$1"
 }
 
+# do not destroy ipset(mwan3 firewall rule still need it)
 smartvpn_ipset_delete()
 {
 
     if [[ "$SOFT" != "soft" ]]; then
+
+        smartvpn_logger "Flush ipset for host and network segment..."
+
         ipset flush ip_oversea
-        ipset destroy ip_oversea
         ipset flush net_oversea
-        ipset destroy net_oversea
 
         ipset flush ip_hongkong
-        ipset destroy ip_hongkong
         ipset flush net_hongkong
-        ipset destroy net_hongkong
 
         ipset flush ip_mainland
-        ipset destroy ip_mainland
         ipset flush net_mainland
-        ipset destroy net_mainland
     fi
 
     return
 }
 
+ipset_create(){
+    local _ipset=$1
+    local _type=$2
+
+    ipset list | grep $_ipset > /dev/null 2>&1
+    if [ $? -ne 0 ]; then
+        ipset create $_ipset hash:$_type >/dev/null 2>&1
+    else
+        [[ "$3" == "hard" ]] && ipset flush $_ipset
+    fi    
+}
+
 smartvpn_ipset_create()
 {
 
-    ipset list | grep ip_oversea  > /dev/null 2>&1
-    smartvpn_logger "creating ipset for individual host..."
-    ipset create ip_oversea  hash:ip > /dev/null 2>&1
-    ipset create ip_hongkong  hash:ip > /dev/null 2>&1
-    ipset create ip_mainland  hash:ip > /dev/null 2>&1
-    if [[ "$SOFT" != "soft" ]]; then
-        smartvpn_logger "Flushing ipset for individual host..."
-        ipset flush ip_oversea
-        ipset flush ip_hongkong
-        ipset flush ip_mainland
-    else
-        smartvpn_logger "Start at soft mode: keep ipset for individual host"
+    smartvpn_logger "creating ipset for host..."
+    if [[ "$SOFT" = "soft" ]]; then
+        smartvpn_logger "soft mode: keep ipset for host"
     fi
+
+    if [[ $vpn_status == "on" && "$SOFT" != "hard"  ]];
+    then
+        smartvpn_logger "SmartVPN already on, try a soft restart..."
+    fi
+
+    ipset_create ip_oversea ip $SOFT
+    ipset_create ip_hongkong ip $SOFT
+    ipset_create ip_mainland ip $SOFT
+
+    ipset_create net_oversea net
+    ipset_create net_hongkong net
+    ipset_create net_mainland net 
 }
 
 smartvpn_ipset_add_by_file()
@@ -62,18 +76,11 @@ smartvpn_ipset_add_by_file()
     local _ipfile=$1
     local _ipset_name=$2
 
-    ipset list | grep $_ipset_name > /dev/null 2>&1
-    if [ $? -ne 0 ]; then
-        ipset create $_ipset_name hash:net > /dev/null 2>&1
-    else
-        ipset flush $_ipset_name
-    fi
-
-    smartvpn_logger "add ip_net to ipset $_ipset_name."
+    smartvpn_logger "add network segments to ipset $_ipset_name."
     cat $_ipfile | while read line
     do
         if [ -n "$line" ]; then
-            ipset add $_ipset_name $line
+            ipset add $_ipset_name $line >/dev/null 2>&1
         fi
     done
 }
@@ -116,9 +123,9 @@ smartvpn_enable()
         rm /tmp/smartvpn_ip.txt
     }
 
-    gensmartdns.sh "/etc/smartvpn/proxy_mainland.txt" "/tmp/dm_mainland.conf" "/tmp/smartvpn_ip.txt" "ip_mainland" "119.29.29.29" > /dev/null 2>&1
+    gensmartdns.sh "/etc/smartvpn/proxy_mainland.txt" "/tmp/dm_mainland.conf" "/tmp/smartvpn_ip.txt" "ip_mainland" $DNS_MAINLAND > /dev/null 2>&1
     if [ -f /etc/smartvpn/user_mainland.txt ]; then
-        gensmartdns.sh "/etc/smartvpn/user_mainland.txt" "/tmp/dm_mainland.conf" "/tmp/smartvpn_ip.txt" "ip_mainland" "119.29.29.29" append > /dev/null 2>&1
+        gensmartdns.sh "/etc/smartvpn/user_mainland.txt" "/tmp/dm_mainland.conf" "/tmp/smartvpn_ip.txt" "ip_mainland" $DNS_MAINLAND append > /dev/null 2>&1
     fi
 
     [ -f /tmp/smartvpn_ip.txt ] && {
@@ -140,6 +147,8 @@ smartvpn_enable()
     smartvpn_logger "Restarting dnsmasq..."
     /etc/init.d/dnsmasq restart  # 重启nsmasq
 
+    sleep 3
+
     smartvpn_logger "Restarting mwan3..."
     /etc/init.d/mwan3 restart > /dev/null 2>&1
 }
@@ -152,14 +161,6 @@ smartvpn_open()
         return 1
     fi
 
-    if [ $vpn_status == "on" ];
-    then
-        smartvpn_logger "SmartVPN already on, try a soft restart..."
-        SOFT='soft'
-        smartvpn_close
-        sleep 3
-    fi
-
     smartvpn_enable
     
     smartvpn_logger "SmartVPN is on!"
@@ -170,19 +171,21 @@ smartvpn_open()
 
 smartvpn_close()
 {    
-    smartvpn_logger "Stoping mwan3..."
-    /etc/init.d/mwan3 stop > /dev/null 2>&1
+    # smartvpn_logger "Stoping mwan3..."
+    # /etc/init.d/mwan3 stop > /dev/null 2>&1
 
-    rm /tmp/dnsmasq.d/dm_oversea.conf
-    rm /tmp/dnsmasq.d/dm_hongkong.conf
-    rm /tmp/dnsmasq.d/dm_mainland.conf
+    smartvpn_ipset_delete
+    rm /tmp/dnsmasq.d/dm_oversea.conf >/dev/null 2>&1
+    rm /tmp/dnsmasq.d/dm_hongkong.conf >/dev/null 2>&1
+    rm /tmp/dnsmasq.d/dm_mainland.conf >/dev/null 2>&1
 
     smartvpn_logger "Restarting dnsmasq..."
     /etc/init.d/dnsmasq restart  # 重启nsmasq
-    smartvpn_ipset_delete
+
+    sleep 3
 
     smartvpn_logger "Restarting mwan3..."
-    /etc/init.d/mwan3 start > /dev/null 2>&1
+    /etc/init.d/mwan3 restart > /dev/null 2>&1
 
     smartvpn_logger "SmartVPN is off!"
     echo
@@ -266,14 +269,13 @@ softether_status_get()
 
 smartvpn_usage()
 {
-    echo "usage: smartvpn.sh on|off [soft]"
-    echo "       smartvpn.sh status [short]"
+    echo "usage: smartvpn.sh status"
+    echo "       smartvpn.sh on [hard]      # hard -- start with clean ipset"
+    echo "       smartvpn.sh off [soft]     # soft -- keep ipset in memory"
     echo "       smartvpn.sh save|restore"
     echo ""
     echo "softether status = $softether_status"
     echo "smartvpn status = $vpn_status"
-    echo ""
-    echo "# soft：keep current ipset result"
     echo ""
     return
 }
@@ -284,13 +286,21 @@ vpn_status_get
 softether_status_get
 
 config_load "smartvpn"
-config_get smartvpn_cfg_switch vpn switch &>/dev/null;
+config_get VPN_ENABLE global vpn_enable 0
+config_get DNS_MAINLAND global dns_mainland 119.29.29.29
 
 OPT=$1
 SOFT=$2
 SHORT=$2
 
 case $OPT in
+    on)
+        if [[ ! -z "$SOFT" && "$SOFT" != "hard" ]]; then
+            echo "***Error*** second parameter only support 'soft'"
+            return 1
+        fi
+    ;;
+
     on|off)
         if [[ ! -z "$SOFT" && "$SOFT" != "soft" ]]; then
             echo "***Error*** second parameter only support 'soft'"
@@ -307,7 +317,7 @@ case $OPT in
 esac
 
 
-smartvpn_lock="/var/run/softether_vpn.lock"
+smartvpn_lock="/var/run/smartvpn.lock"
 trap "lock -u $smartvpn_lock; exit 1" SIGHUP SIGINT SIGTERM
 lock $smartvpn_lock
 
@@ -316,24 +326,28 @@ case $OPT in
     on)
         smartvpn_open
         lock -u $smartvpn_lock
-        return $?
+        rm $smartvpn_lock
+        return
     ;;
 
     off)
         smartvpn_close
         lock -u $smartvpn_lock
-        return $?
+        rm $smartvpn_lock
+        return
     ;;
 
     status)
         smartvpn_status
         lock -u $smartvpn_lock
-        return $?               
+        rm $smartvpn_lock
+        return
     ;;
 
     *)
         smartvpn_usage
         lock -u $smartvpn_lock
-        return 1
+        rm $smartvpn_lock
+        return
     ;;
 esac
