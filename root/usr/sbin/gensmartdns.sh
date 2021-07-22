@@ -1,6 +1,9 @@
 #!/bin/sh
-#
-# rule_file->format2domain->domain_file_formated->sort->domain_file_sorted->domain_file+ip_file
+
+######################################################
+# smartvpn dnsmasq domain configuration file generator
+# create by Daniel Yang 2021-07-22
+######################################################
 
 domain_file_formated="/tmp/smartvpn_domain_format.tmp"
 domain_file_sorted="/tmp/smartvpn_domain_sort.tmp"

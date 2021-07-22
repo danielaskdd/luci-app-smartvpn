@@ -1,11 +1,8 @@
 #!/bin/sh
 
 ############################################
-# smartvpn startup scrip for OpenWRT
+# smartvpn control scrip for OpenWRT
 # create by Daniel Yang 2021-06-18
-#    1. translate domain & net definition in /etc/smartdns to dnsmasq configuration format
-#    2. put the output file to /tmp/dnsmasq.d and restart dnsmasq
-#    3. 
 ############################################
 
 . /lib/functions.sh

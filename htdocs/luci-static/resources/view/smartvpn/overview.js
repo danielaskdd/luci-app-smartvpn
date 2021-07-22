@@ -1,3 +1,7 @@
+/*
+	SmartVPN overview page code
+*/
+
 'use strict';
 'require fs';
 'require ui';

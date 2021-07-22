@@ -43,8 +43,6 @@ stop() {
 }
 
 restart() {
-	# stop
-	# sleep3
 	start
 }
 

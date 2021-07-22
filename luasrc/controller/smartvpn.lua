@@ -1,3 +1,4 @@
+-- SmartVPN menu entry point registration
 -- stub lua controller for 19.07 backward compatibility
 
 module("luci.controller.smartvpn", package.seeall)
