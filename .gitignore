@@ -1,6 +1,7 @@
 .vscode/*
 *.code-workspace
 .DS_Store
+luasrc/i18n
 
 # Compiled Lua sources
 luac.out
