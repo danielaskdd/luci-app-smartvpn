@@ -7,6 +7,7 @@ PATH=/opt/sbin:/opt/bin:/opt/usr/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/u
 
 config_load smartvpn
 config_get VPN_ENABLE global vpn_enable 0
+config_get VPN_CONFIG_PARM global config_parm ""
 
 ipset_create(){
     local _ipset=$1
@@ -21,7 +22,16 @@ ipset_create(){
 }
 
 start() {
-	# should create ipsest anyway
+	if [[ -n "$VPN_CONFIG_PARM" ]]; then
+		logger -s -t softether "Config SmartVPN with parm: $VPN_CONFIG_PARM"
+		/usr/share/smartvpn/smartvpnconfig.sh --norestart $VPN_CONFIG_PARM
+		if [ $? -eq 0 ]; then
+			uci delete smartvpn.global.config_parm
+			uci commit smartvpn
+		fi
+	fi
+
+	# create ipsest anyway
 	ipset_create ip_oversea
     ipset_create ip_hongkong
     ipset_create ip_mainland

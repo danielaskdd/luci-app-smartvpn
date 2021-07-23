@@ -8,6 +8,8 @@
 . /lib/functions.sh
 . /lib/functions/network.sh
 
+cd "$( dirname $0 )"
+
 . ./conf/network.conf
 . ./conf/firewall.conf
 
@@ -429,8 +431,6 @@ if [[ -z "$action"  ]]; then
 fi
 
 # echo "Action: $action"
-
-cd "$(dirname "$0")"
 
 # 检查安装环境
 check_env
