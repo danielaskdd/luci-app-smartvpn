@@ -316,6 +316,7 @@ softether_status_get
 config_load "smartvpn"
 config_get VPN_ENABLE global vpn_enable 0
 config_get DNS_MAINLAND global dns_mainland 119.29.29.29
+config_get VPN_CONFIG_PARM global config_parm ""
 
 OPT=$1
 SOFT=$2
@@ -346,16 +347,28 @@ esac
 
 
 smartvpn_lock="/var/run/smartvpn.lock"
-trap "lock -u $smartvpn_lock; exit 1" SIGHUP SIGINT SIGTERM
-lock $smartvpn_lock
+trap "lock -u $smartvpn_lock; exit 1" SIGHUP SIGINT SIGTER
 
 case $OPT in
     on)
+        if [[ -nz "$VPN_CONFIG_PARM" ]]; then
+            /usr/share/smartvpn/smartvpnconfig.sh ----norestart $VPN_CONFIG_PARM
+            if [ $? -eq 0 ]; then
+                uci delete smartvpn.global.config_parm
+                uci commit smartvpn
+            fi
+        fi
+        lock $smartvpn_lock
         smartvpn_open
+        lock -u $smartvpn_lock
+        rm $smartvpn_lock
     ;;
 
     off)
+        lock $smartvpn_lock
         smartvpn_close
+        lock -u $smartvpn_lock
+        rm $smartvpn_lock
     ;;
 
     status)
@@ -374,7 +387,3 @@ case $OPT in
         smartvpn_usage
     ;;
 esac
-
-lock -u $smartvpn_lock
-rm $smartvpn_lock
-
