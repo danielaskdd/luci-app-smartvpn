@@ -346,10 +346,10 @@ esac
 
 
 smartvpn_lock="/var/run/smartvpn.lock"
-trap "lock -u $smartvpn_lock; exit 1" SIGHUP SIGINT SIGTER
 
 case $OPT in
     on)
+        trap "lock -u $smartvpn_lock; exit 1" SIGHUP SIGINT SIGTER
         lock $smartvpn_lock
         smartvpn_open
         lock -u $smartvpn_lock
@@ -357,6 +357,7 @@ case $OPT in
     ;;
 
     off)
+        trap "lock -u $smartvpn_lock; exit 1" SIGHUP SIGINT SIGTER
         lock $smartvpn_lock
         smartvpn_close
         lock -u $smartvpn_lock
