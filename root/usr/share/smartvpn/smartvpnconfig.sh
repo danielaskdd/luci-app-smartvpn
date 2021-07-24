@@ -15,7 +15,7 @@ cd "$( dirname $0 )"
 
 smartvpn_logger()
 {
-    logger -s -t softether_vpn "$1"
+    logger -s -t smartvpn "$1"
 }
 
 process_network_firewall() {
@@ -30,7 +30,7 @@ config_cb() {
         smartvpn_logger "Processing: network lan interface"
 
         if [[ "$SET_LOCALIP" == 1 && -n "$SMARTVPN_NETID" ]]; then
-            echo " -- setting lan ip by config"
+            smartvpn_logger " -- setting lan ip by config"
             uci -q batch <<-EOF >/dev/null
                 set network.$sname.ipaddr="$SMARTVPN_LAN_ADDR_IP4"
                 set network.$sname.netmask="$SMARTVPN_LAN_MASK_IP4"
@@ -53,7 +53,7 @@ reset_cb
 
 # process vpn tap interface (replace if already exists)
 echo
-echo "Processing: vpn tap interface"
+smartvpn_logger "Processing: vpn tap interface"
 uci -q batch <<-EOF >/dev/null
 	delete network.$SMARTVPN_LANMAN_NAME
     set network.$SMARTVPN_LANMAN_NAME=interface
@@ -65,7 +65,7 @@ uci -q batch <<-EOF >/dev/null
     set network.$SMARTVPN_LANMAN_NAME.ipaddr="$SMARTVPN_LANMAN_ADDR_IP4"
     commit network
 EOF
-#echo "seting tap interface: $SMARTVPN_LANMAN_NAME"
+#smartvpn_logger "seting tap interface: $SMARTVPN_LANMAN_NAME"
 uci show network.$SMARTVPN_LANMAN_NAME
 uci -q batch <<-EOF >/dev/null
 	delete network.$SMARTVPN_HUB01_NAME
@@ -80,7 +80,7 @@ uci -q batch <<-EOF >/dev/null
     set network.$SMARTVPN_HUB01_NAME.gateway="$SMARTVPN_HUB01_GATEWAY_IP4"
     commit network
 EOF
-#echo "seting tap interface: $SMARTVPN_HUB01_NAME"
+#smartvpn_logger "seting tap interface: $SMARTVPN_HUB01_NAME"
 uci show network.$SMARTVPN_HUB01_NAME
 uci -q batch <<-EOF >/dev/null
 	delete network.$SMARTVPN_HUB02_NAME
@@ -95,7 +95,7 @@ uci -q batch <<-EOF >/dev/null
     set network.$SMARTVPN_HUB02_NAME.gateway="$SMARTVPN_HUB02_GATEWAY_IP4"
     commit network
 EOF
-#echo "seting tap interface: $SMARTVPN_HUB02_NAME"
+#smartvpn_logger "seting tap interface: $SMARTVPN_HUB02_NAME"
 uci show network.$SMARTVPN_HUB02_NAME
 
 # processing network static route(replace if already exist)
@@ -105,17 +105,17 @@ delete_route() {
 
     config_get rttarget "$config" target
     if [[ "$rttarget" == "1.1.1.1" || "$rttarget" == "8.8.8.8" ]]; then
-        echo "Old route target $rttarget found, deleting..."
+        smartvpn_logger "Old route target $rttarget found, deleting..."
         uci delete network.$config
-        #echo "session: $config"
+        #smartvpn_logger "session: $config"
     fi
 }
 echo 
-echo "Processing: network static route"
+smartvpn_logger "Processing: network static route"
 config_load network
 config_foreach delete_route route
 uci commit network
-echo "Adding static route for 1.1.1.1 and 8.8.8.8"
+smartvpn_logger "Adding static route for 1.1.1.1 and 8.8.8.8"
 uci -q batch <<-EOF >/dev/null
 	add network route
 	set network.@route[-1].target=$SMARTVPN_ROUTE_DNS01_TG
@@ -134,7 +134,7 @@ config_cb() {
     local sname="$2"
     if [[ "$stype" == "defaults" ]]; then
         echo 
-        echo "Processing: firewall zone defaults"
+        smartvpn_logger "Processing: firewall zone defaults"
         uci -q batch <<-EOF >/dev/null
             set firewall.$sname.input="$SMARTVPN_FW_DEFAULT_INPUT"
             set firewall.$sname.output="$SMARTVPN_FW_DEFAULT_OUTPUT"
@@ -155,7 +155,7 @@ handle_zone() {
     config_get zname "$config" name
 
     if [[ "$zname" == "$SMARTVPN_FW_LAN_NAME" ]]; then
-        echo "Updating zone $zname($config) setting"
+        smartvpn_logger "Updating zone $zname($config) setting"
         uci -q batch <<-EOF >/dev/null
             set firewall.$config.network="$SMARTVPN_FW_LAN_IF"
             set firewall.$config.input="$SMARTVPN_FW_LAN_INPUT"
@@ -164,7 +164,7 @@ handle_zone() {
 EOF
         uci show firewall.$config
     elif [[ "$zname" == "$SMARTVPN_FW_WAN_NAME" ]]; then
-        echo "Updating zone $zname($config) setting"
+        smartvpn_logger "Updating zone $zname($config) setting"
         uci -q batch <<-EOF >/dev/null
             set firewall.$config.network="$SMARTVPN_FW_WAN_IF"
             set firewall.$config.input="$SMARTVPN_FW_WAN_INPUT"
@@ -175,16 +175,16 @@ EOF
 EOF
         uci show firewall.$config
     elif [[ "$zname" == "$SMARTVPN_FW_LANMAN_NAME" ]]; then
-        echo "Old zone $zname($config) found, delete..."
+        smartvpn_logger "Old zone $zname($config) found, delete..."
         uci delete firewall.$config
     fi
 }
 echo
-echo "Processing: firewall zones"
+smartvpn_logger "Processing: firewall zones"
 config_load firewall
 config_foreach handle_zone zone
 uci commit firewall
-echo "Adding zone $SMARTVPN_FW_LANMAN_NAME"
+smartvpn_logger "Adding zone $SMARTVPN_FW_LANMAN_NAME"
 config=`uci -q batch` <<-EOF
 	add firewall zone
 	set firewall.@zone[-1].name=$SMARTVPN_FW_LANMAN_NAME
@@ -205,22 +205,22 @@ handle_forwarding() {
     config_get src "$config" src
 
     if [[ "$dest" == "$SMARTVPN_FW_LAN_WAN_FORWARD_DEST" && "$src" == "$SMARTVPN_FW_LAN_WAN_FORWARD_SRC" ]]; then
-        echo "Old forwarding rule $src->$dest found, deleting"
+        smartvpn_logger "Old forwarding rule $src->$dest found, deleting"
         uci delete firewall.$config
     elif [[ "$dest" == "$SMARTVPN_FW_LAN_LANMAN_FORWARD_DEST" && "$src" == "$SMARTVPN_FW_LAN_LANMAN_FORWARD_SRC" ]]; then
-        echo "Old forwarding rule $src->$dest found, deleting"
+        smartvpn_logger "Old forwarding rule $src->$dest found, deleting"
         uci delete firewall.$config
     elif [[ "$dest" == "$SMARTVPN_FW_LANMAN_LAN_FORWARD_DEST" && "$src" == "$SMARTVPN_FW_LANMAN_LAN_FORWARD_SRC" ]]; then
-        echo "Old forwarding rule $src->$dest found, deleting"
+        smartvpn_logger "Old forwarding rule $src->$dest found, deleting"
         uci delete firewall.$config
     fi
 }
 echo
-echo "Processing: firewall forwarding rule"
+smartvpn_logger "Processing: firewall forwarding rule"
 config_load firewall
 config_foreach handle_forwarding forwarding
 uci commit firewall
-echo "Adding forwarding rule for lan->wan and lan<->lanman"
+smartvpn_logger "Adding forwarding rule for lan->wan and lan<->lanman"
 config=`uci -q batch` <<-EOF
 	add firewall forwarding
 	set firewall.@forwarding[-1].dest=$SMARTVPN_FW_LAN_WAN_FORWARD_DEST
@@ -259,31 +259,31 @@ handle_rule() {
     config_get name "$config" name "x"
 
     if [[ "$name" == "$SMARTVPN_FW_SEMAN_NAME" ]]; then
-        echo "Old $SMARTVPN_FW_SEMAN_NAME($config) rule found, deleting"
+        smartvpn_logger "Old $SMARTVPN_FW_SEMAN_NAME($config) rule found, deleting"
         uci delete firewall.$config
     elif [[ "$name" == "$SMARTVPN_FW_SEUDP_NAME" ]]; then
-        echo "Old $SMARTVPN_FW_SEUDP_NAME($config) rule found, deleting"
+        smartvpn_logger "Old $SMARTVPN_FW_SEUDP_NAME($config) rule found, deleting"
         uci delete firewall.$config
     elif [[ "$dest" == "$SMARTVPN_FW_IPSEC_DEST" && "$src" == "$SMARTVPN_FW_IPSEC_SRC" && "$proto" == "$SMARTVPN_FW_IPSEC_PROTO" ]]; then
-        echo "Old $SMARTVPN_FW_IPSEC_NAME($config) rulefound, deleting"
+        smartvpn_logger "Old $SMARTVPN_FW_IPSEC_NAME($config) rulefound, deleting"
         uci delete firewall.$config
     elif [[ "$dest" == "$SMARTVPN_FW_ISAKMP_DEST" && "$src" == "$SMARTVPN_FW_ISAKMP_SRC" && "$dest_port" == "$SMARTVPN_FW_ISAKMP_DEST_PORT" ]]; then
-        echo "Old $SMARTVPN_FW_ISAKMP_NAME($config) rule found, deleting"
+        smartvpn_logger "Old $SMARTVPN_FW_ISAKMP_NAME($config) rule found, deleting"
         uci delete firewall.$config
     elif [[ "$src" == "$SMARTVPN_FW_SSH_SRC" && "$dest_port" == "$SMARTVPN_FW_SSH_DEST_PORT" ]]; then
-        echo "Old $SMARTVPN_FW_SSH_NAME($config) rule found, deleting"
+        smartvpn_logger "Old $SMARTVPN_FW_SSH_NAME($config) rule found, deleting"
         uci delete firewall.$config
     elif [[ "$src" == "$SMARTVPN_FW_WEB_SRC" && "$dest_port" == "$SMARTVPN_FW_WEB_DEST_PORT" ]]; then
-        echo "Old $SMARTVPN_FW_WEB_NAME($config) rule found, deleting"
+        smartvpn_logger "Old $SMARTVPN_FW_WEB_NAME($config) rule found, deleting"
         uci delete firewall.$config
     fi
 }
 echo
-echo "Processing: firewall wan access rule"
+smartvpn_logger "Processing: firewall wan access rule"
 config_load firewall
 config_foreach handle_rule rule
 uci commit firewall
-echo "Adding new $SMARTVPN_FW_IPSEC_NAME rule"
+smartvpn_logger "Adding new $SMARTVPN_FW_IPSEC_NAME rule"
 config=`uci -q batch` <<-EOF
 	add firewall rule
 	set firewall.@rule[-1].name="$SMARTVPN_FW_IPSEC_NAME"
@@ -294,7 +294,7 @@ config=`uci -q batch` <<-EOF
     commit firewall
 EOF
 uci show firewall.$config
-echo "Adding new $SMARTVPN_FW_ISAKMP_NAME rule"
+smartvpn_logger "Adding new $SMARTVPN_FW_ISAKMP_NAME rule"
 config=`uci -q batch` <<-EOF
 	add firewall rule
 	set firewall.@rule[-1].name="$SMARTVPN_FW_ISAKMP_NAME"
@@ -306,7 +306,7 @@ config=`uci -q batch` <<-EOF
     commit firewall
 EOF
 uci show firewall.$config
-echo "Adding new $SMARTVPN_FW_SSH_NAME rule"
+smartvpn_logger "Adding new $SMARTVPN_FW_SSH_NAME rule"
 config=`uci -q batch` <<-EOF
 	add firewall rule
 	set firewall.@rule[-1].name="$SMARTVPN_FW_SSH_NAME"
@@ -317,7 +317,7 @@ config=`uci -q batch` <<-EOF
     commit firewall
 EOF
 uci show firewall.$config
-echo "Adding new $SMARTVPN_FW_WEB_NAME rule"
+smartvpn_logger "Adding new $SMARTVPN_FW_WEB_NAME rule"
 config=`uci -q batch` <<-EOF
 	add firewall rule
 	set firewall.@rule[-1].name="$SMARTVPN_FW_WEB_NAME"
@@ -328,7 +328,7 @@ config=`uci -q batch` <<-EOF
     commit firewall
 EOF
 uci show firewall.$config
-echo "Adding new $SMARTVPN_FW_SEMAN_NAME rule"
+smartvpn_logger "Adding new $SMARTVPN_FW_SEMAN_NAME rule"
 config=`uci -q batch` <<-EOF
 	add firewall rule
 	set firewall.@rule[-1].name="$SMARTVPN_FW_SEMAN_NAME"
@@ -338,7 +338,7 @@ config=`uci -q batch` <<-EOF
     commit firewall
 EOF
 uci show firewall.$config
-echo "Adding new $SMARTVPN_FW_SEUDP_NAME rule"
+smartvpn_logger "Adding new $SMARTVPN_FW_SEUDP_NAME rule"
 config=`uci -q batch` <<-EOF
 	add firewall rule
 	set firewall.@rule[-1].name="$SMARTVPN_FW_SEUDP_NAME"
@@ -356,7 +356,7 @@ check_installed_package(){
     local _packagename=$1
     _tmpPackage=$(opkg list-installed | grep "$_packagename" | awk '{print $1}' 2>/dev/null)
     if [[ -z "$_tmpPackage" ]]; then
-        echo "package $_packagename is missing"
+        smartvpn_logger "package $_packagename is missing"
         return 1
     fi
     return 0
@@ -367,7 +367,7 @@ check_env(){
         && check_installed_package mwan3 && check_installed_package luci-app-smartvpn
 
     if [[ $? -ne 0 ]]; then
-        echo "Error: required package is missing. Config abort!"
+        smartvpn_logger "Error: required package is missing. Config abort!"
         exit 2
     fi
 
@@ -451,7 +451,7 @@ while [ -n "$1" ]; do
 
     *)
         echo
-        echo "Error: unrecognized command or option"
+        smartvpn_logger "Error: unrecognized command or option"
         usage
         exit 1
         ;;
@@ -490,7 +490,7 @@ case $action in
             else
                 smartvpn_logger "Setting vpnserver with system default config(no upstream connection)..."
                 config_vpnserver ./service/vpn_server.config
-        fi
+            fi
         fi
     else
         echo
@@ -505,13 +505,13 @@ case $action in
     config_get lan2rt_ifname lan2rt ifname
     echo 
     if [[ -n "$lan2rt_ifname" ]]; then
-        echo "This is a side router, network config skipped!!!"
+        smartvpn_logger "This is a side router, network config skipped!!!"
         action=${action//network/}
     else
         backup_file /etc/config/network
         backup_file /etc/config/firewall
         process_network_firewall
-        echo "Restarting network..."
+        smartvpn_logger "Restarting network..."
         /etc/init.d/network restart
         sleep 2
     fi
@@ -520,22 +520,22 @@ esac
 case $action in
     *nlbwmon*) 
     echo
-    echo "Updating nlbwmon config..."
+    smartvpn_logger "Updating nlbwmon config..."
     backup_file /etc/config/nlbwmon
     backup_file /usr/share/nlbwmon/protocols
     cp -p ./service/nlbwmon /etc/config/nlbwmon
     cp -p ./service/protocols /usr/share/nlbwmon/protocols
-    echo "Restarting nlbwmon service..."
+    smartvpn_logger "Restarting nlbwmon service..."
     /etc/init.d/nlbwmon restart
 esac
 
 case $action in
     *statistics*) 
     echo
-    echo "Updating luci_statistics config..."
+    smartvpn_logger "Updating luci_statistics config..."
     backup_file /etc/config/luci_statistics
     cp -p ./service/luci_statistics /etc/config/luci_statistics
-    echo "Restarting luci_statistics service..."
+    smartvpn_logger "Restarting luci_statistics service..."
     /etc/init.d/collectd restart
     /etc/init.d/luci_statistics restart
     rm -f /tmp/luci-indexcache*
@@ -545,7 +545,7 @@ esac
 case $action in
     *mwan3*) 
     echo
-    echo "Updating mwan3 to config..."
+    smartvpn_logger "Updating mwan3 to config..."
     backup_file /etc/config/mwan3
     cp -p ./service/mwan3 /etc/config/mwan3
 esac
@@ -553,17 +553,17 @@ esac
 case $action in
     *domain*) 
     echo
-    echo "Updating system mainland domain..."
+    smartvpn_logger "Updating system mainland domain..."
     backup_file /etc/smartvpn/proxy_mainland.txt
     cp -p ./proxy/proxy_mainland.txt /etc/smartvpn/proxy_mainland.txt
 
     echo
-    echo "Updating system hongkong domain..."
+    smartvpn_logger "Updating system hongkong domain..."
     backup_file /etc/smartvpn/proxy_hongkong.txt
     cp -p ./proxy/proxy_hongkong.txt /etc/smartvpn/proxy_hongkong.txt
 
     echo
-    echo "Updating system oversea domain..."
+    smartvpn_logger "Updating system oversea domain..."
     backup_file /etc/smartvpn/proxy_oversea.txt
     cp -p ./proxy/proxy_oversea.txt /etc/smartvpn/proxy_oversea.txt
     ;;
@@ -576,7 +576,7 @@ if [[ "$DO_NOT_RESTART" == 0 ]]; then
     case $action in
         *mwan3*|*domain*|*network*|*vpnserver*) 
         echo
-        echo "Restarting SmartVPN..."
+        smartvpn_logger "Restarting SmartVPN..."
         /etc/init.d/smartvpn restart
         ;;
     esac

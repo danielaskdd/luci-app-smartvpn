@@ -10,7 +10,7 @@
 
 smartvpn_logger()
 {
-    logger -s -t softether_vpn "$1"
+    logger -s -t smartvpn "$1"
 }
 
 # do not destroy ipset(mwan3 firewall rule still need it)
