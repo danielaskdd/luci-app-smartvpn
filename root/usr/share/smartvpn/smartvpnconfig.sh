@@ -13,6 +13,11 @@ cd "$( dirname $0 )"
 . ./conf/network.conf
 . ./conf/firewall.conf
 
+smartvpn_logger()
+{
+    logger -s -t softether_vpn "$1"
+}
+
 process_network_firewall() {
 
 # processing network lan interface(modify only)
@@ -22,9 +27,9 @@ config_cb() {
     if [[ "$stype" == "interface" && "$sname" == "$SMARTVPN_LAN_NAME" ]]; then
 
         echo 
-        echo "Processing: network lan interface"
+        smartvpn_logger "Processing: network lan interface"
 
-        if [[ "$SET_LOCALIP" == 1 && -n $SMARTVPN_NETID ]]; then
+        if [[ "$SET_LOCALIP" == 1 && -n "$SMARTVPN_NETID" ]]; then
             echo " -- setting lan ip by config"
             uci -q batch <<-EOF >/dev/null
                 set network.$sname.ipaddr="$SMARTVPN_LAN_ADDR_IP4"
