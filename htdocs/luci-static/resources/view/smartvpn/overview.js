@@ -86,14 +86,14 @@ return L.view.extend({
 
 					var result = res.split("\n");
 
-					if (result[0].indexOf("OFF")>0) {
-						reload.disabled=true;
-						snapshot.disabled=true;
-						restore.disabled=true;
-					} else {
+					if (result[0].indexOf("ON")>0) {
 						reload.disabled=false;
 						snapshot.disabled=false;
 						restore.disabled=false;
+					} else {
+						reload.disabled=true;
+						snapshot.disabled=true;
+						restore.disabled=true;
 					}
 
 					if (status && result[0]) {
