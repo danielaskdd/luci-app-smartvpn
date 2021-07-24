@@ -24,7 +24,7 @@ config_cb() {
         echo 
         echo "Processing: network lan interface"
 
-        if [[ "$SET_LOCALIP" == 1 ]]; then
+        if [[ "$SET_LOCALIP" == 1 && -n $SMARTVPN_NETID ]]; then
             echo " -- setting lan ip by config"
             uci -q batch <<-EOF >/dev/null
                 set network.$sname.ipaddr="$SMARTVPN_LAN_ADDR_IP4"
@@ -347,7 +347,7 @@ check_env(){
     check_installed_package dnsmasq-full && check_installed_package softethervpn-server \
         && check_installed_package mwan3 && check_installed_package luci-app-smartvpn
 
-    if [ $? -ne 0 ]; then
+    if [[ $? -ne 0 ]]; then
         echo "Error: required package is missing. Config abort!"
         exit 2
     fi
@@ -379,8 +379,9 @@ backup_file(){
 usage()
 {
     echo
-    echo "Usage: smartvpnconfig.sh  --norestart --localip [all] [network] [mwan3] [nlbwmon] [statistics] [vpnserver] [domain]"
+    echo "Usage: smartvpnconfig.sh  --norestart --lanip [all] [network] [mwan3] [nlbwmon] [statistics] [vpnserver] [domain]"
     echo
+    echo "command:"
     echo "  all: config all settings (use --localip)"
     echo "  network: resotre network setting (use --localip)"
     echo "  mwan3: restore mwan3 setting"
@@ -388,8 +389,8 @@ usage()
     echo "  statistics: restore luci-statisitics setting"
     echo "  vpnserver: restore vpnserver setting"
     echo "  domain: restore system domain setting(mainland/hongkong/oversea)"
-    echo
-    echo "  --localip: restore route's LAN ip (uses with 'network' or 'all' command)"
+    echo "optionn:"
+    echo "  --lanip: set route's LAN by user config file (works with 'network' command)"
     echo "  --norestart: do not restart SmartVPN when config is done"
     echo 
     return
@@ -409,7 +410,7 @@ while [ -n "$1" ]; do
         action="network mwan3 nlbwmon statistics vpnserver domain"
         ;;
 
-    --localip)
+    --lanip)
         SET_LOCALIP=1
         ;;
 
@@ -418,9 +419,10 @@ while [ -n "$1" ]; do
         ;;
 
     *)
-        echo "Error: unreconize action or option"
+        echo
+        echo "Error: unrecognized command or option"
         usage
-        exit 0
+        exit 1
         ;;
 
     esac
@@ -439,22 +441,25 @@ check_env
 
 case $action in
     *vpnserver*) 
-    if [[ -f ./service/vpn_server.config ]]; then
+    if [[ -f ./service/vpn_server.config || -f $SMARTVPN_SECONFIG ]]; then
+        
         echo
         echo "Stoping vpnserver"
         /etc/init.d/softethervpnserver stop
-        echo "Updating vpnserver config..."
-        sleep 3
+        sleep 2
         backup_file /usr/libexec/softethervpn/vpn_server.config
-        cp -p ./service/vpn_server.config /usr/libexec/softethervpn/vpn_server.config
+
+        if [[ -f $SMARTVPN_SECONFIG ]]; then
+            echo "Setting vpnserver with user specific config..."
+            cp -p $SMARTVPN_SECONFIG  /usr/libexec/softethervpn/vpn_server.config
+        else
+            echo "Setting vpnserver with system default config(no upstream connection)..."
+            cp -p ./service/vpn_server.config /usr/libexec/softethervpn/vpn_server.config
+        fi
+
         echo "Starting vpnserver"    
         /etc/init.d/softethervpnserver start
         sleep 3
-        grep 'declare Cascade0' ./service/vpn_server.config > /dev/null
-        if [ $? -ne 0 ]; then
-            echo "The vpnserver must be setup with cascade connects for SmartVPN to work!"
-            echo "Windos SoftEther server management tool to recommended, default password is 'gzdaniel'"
-        fi
     else
         echo
         echo "Configuration file for vpnserver is missing !!!"

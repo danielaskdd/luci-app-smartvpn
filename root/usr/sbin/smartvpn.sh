@@ -349,7 +349,12 @@ smartvpn_lock="/var/run/smartvpn.lock"
 
 case $OPT in
     on)
-        trap "lock -u $smartvpn_lock; exit 1" SIGHUP SIGINT SIGTER
+    	grep 'declare Cascade0' /usr/libexec/softethervpn/vpn_server.config > /dev/null
+        if [ $? -ne 0 ]; then
+            echo "***Error*** The vpnserver dose not setup with upstream connection"
+            return 3
+        fi
+        trap "lock -u $smartvpn_lock; exit 1" SIGHUP SIGINT SIGTERM
         lock $smartvpn_lock
         smartvpn_open
         lock -u $smartvpn_lock
@@ -357,7 +362,7 @@ case $OPT in
     ;;
 
     off)
-        trap "lock -u $smartvpn_lock; exit 1" SIGHUP SIGINT SIGTER
+        trap "lock -u $smartvpn_lock; exit 1" SIGHUP SIGINT SIGTERM
         lock $smartvpn_lock
         smartvpn_close
         lock -u $smartvpn_lock
@@ -369,11 +374,21 @@ case $OPT in
     ;;
 
     save)
-        smartvpn_saveipset
+        if [ $vpn_status == "on" ]; then
+            smartvpn_saveipset
+        else
+            echo "***Error*** SmartVPN service is not enabled"
+            return 2
+        fi
     ;;
 
     restore)
-        smartvpn_restoreipset
+        if [ $vpn_status == "on" ]; then
+            smartvpn_restoreipset
+        else
+            echo "***Error*** SmartVPN service is not enabled"
+            return 2
+        fi
     ;;
 
     *)

@@ -171,6 +171,12 @@ return L.view.extend({
 		o = s.option(form.Value, 'dns_mainland', _('mainland DNS'), _('The DNS ip from your ISP or fastest DNS for mainland getway.'));
 		o.placeholder = '127.0.0.1 or 119.29.29.29';
 		o.rmempty = false;
+		o.datatype = "ip4addr";
+
+		o = s.option(form.Value, 'init_cmd', _('Init cmd'), _('Restore initial configuration(do it at your own risk).'));
+		o.placeholder = 'network mwan3 vpnserver';
+		o.rmempty = true;
+		o.datatype = "string";
 
 		return m.render();
 	},

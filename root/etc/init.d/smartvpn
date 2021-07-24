@@ -7,7 +7,22 @@ PATH=/opt/sbin:/opt/bin:/opt/usr/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/u
 
 config_load smartvpn
 config_get VPN_ENABLE global vpn_enable 0
-config_get VPN_CONFIG_PARM global config_parm ""
+config_get VPN_INIT_CMD global init_cmd ""
+
+smartvpn_init(){
+	# check if first time installation
+	if [[ ! -d /etc/smartvpn/backup ]]; then
+		VPN_INIT_CMD="--lanip all"
+	fi
+	if [[ -n "$VPN_INIT_CMD" ]]; then
+		logger -s -t softether "Executing SmartVPN init command: $VPN_INIT_CMD"
+		/usr/share/smartvpn/smartvpnconfig.sh --norestart $VPN_INIT_CMD
+		if [ $? -eq 0 ]; then
+			uci set smartvpn.global.init_cmd=""
+			uci commit smartvpn
+		fi
+	fi
+}
 
 ipset_create(){
     local _ipset=$1
@@ -22,19 +37,8 @@ ipset_create(){
 }
 
 start() {
-	# check if first time installation
-	if [[ ! -d /etc/smartvpn/backup ]]; then
-		VPN_CONFIG_PARM="--localip all"
-	fi
-	if [[ -n "$VPN_CONFIG_PARM" ]]; then
-		logger -s -t softether "Config SmartVPN with parm: $VPN_CONFIG_PARM"
-		/usr/share/smartvpn/smartvpnconfig.sh --norestart $VPN_CONFIG_PARM
-		if [ $? -eq 0 ]; then
-			uci delete smartvpn.global.config_parm
-			uci commit smartvpn
-		fi
-	fi
-
+	# check if init is needed
+	smartvpn_init
 	# create ipsest anyway
 	ipset_create ip_oversea
     ipset_create ip_hongkong
@@ -44,7 +48,7 @@ start() {
     ipset_create net_mainland net
 
 	if [ $VPN_ENABLE == 1 ]; then
-		logger -s -t softether "Stoping SmartVPN..."
+		logger -s -t softether "Starting SmartVPN..."
 		smartvpn.sh on hard
 	else
 		logger -s -t softether "SmartVPN is disabled"
@@ -61,6 +65,8 @@ restart() {
 }
 
 reload() {
+	# check if init is needed
+	smartvpn_init	
 	if [ $VPN_ENABLE == 1 ]; then
 		logger -s -t softether "Reloading SmartVPN...（soft）"
 		smartvpn.sh on
