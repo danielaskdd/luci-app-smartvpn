@@ -64,7 +64,7 @@ return L.view.extend({
 			poll runtime information
 		*/
 		pollData: L.Poll.add(function() {
-			return L.resolveDefault(fs.read_direct('/var/run/smartvpn.lock')).then(function(res) {
+			return L.resolveDefault(fs.read_direct('/var/run/smartvpn.work')).then(function(res) {
 
 				var status = document.getElementById('status');
 				var reload = document.getElementById('btn_reload');
@@ -78,7 +78,6 @@ return L.view.extend({
 				} else if (status) {
 					if (status.classList.contains("spinning")) {
 						status.classList.remove("spinning");
-						// L.Poll.stop();   //不需要停止,持续刷新状态
 					}
 				}
 
@@ -114,7 +113,7 @@ return L.view.extend({
 					if (oversea && result[1]) {
 						oversea.textContent = result[3];
 					}
-				})					
+				})	
 			})
 		}, 1);
 

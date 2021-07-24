@@ -471,8 +471,10 @@ fi
 check_env
 
 smartvpn_lock="/var/run/smartvpn.lock"
-trap "lock -u $smartvpn_lock; rm $smartvpn_lock; exit 1" SIGHUP SIGINT SIGTERM
+smartvpn_work="/var/run/smartvpn.work"
+trap "lock -u $smartvpn_lock; rm $smartvpn_work; exit 2" SIGHUP SIGINT SIGTERM
 lock $smartvpn_lock
+echo $$ > ${smartvpn_work}
 
 case $action in
     *vpnserver*) 
@@ -569,8 +571,8 @@ case $action in
     ;;
 esac
 
+rm ${smartvpn_work}
 lock -u $smartvpn_lock
-rm $smartvpn_lock
 
 if [[ "$DO_NOT_RESTART" == 0 ]]; then
     case $action in

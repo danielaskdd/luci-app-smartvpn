@@ -15,7 +15,7 @@
 				"/etc/smartvpn/user*": [ "read" ],
 				"/usr/sbin/smartvpn.sh *": [ "exec" ],
 				"/etc/init.d/smartvpn *" : [ "exec" ],
-				"/var/run/smartvpn.lock" : [ "read" ]
+				"/var/run/smartvpn.work" : [ "read" ]
 			}
 		}
 	}

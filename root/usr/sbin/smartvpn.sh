@@ -325,29 +325,24 @@ case $OPT in
     on)
         if [[ ! -z "$SOFT" && "$SOFT" != "hard" ]]; then
             echo "***Error*** second parameter only support 'soft'"
-            return 1
+            exit 1
         fi
     ;;
 
     on|off)
         if [[ ! -z "$SOFT" && "$SOFT" != "soft" ]]; then
             echo "***Error*** second parameter only support 'soft'"
-            return 1
+            exit 1
         fi
     ;;
 
-    status)
-        if [[ ! -z "$SHORT" && "$SHORT" != "short" ]]; then
-            echo "***Error*** second parameter only support 'short'"
-            return 1
-        fi
-    ;;
 esac
 
-
 smartvpn_lock="/var/run/smartvpn.lock"
-trap "lock -u $smartvpn_lock; rm $smartvpn_lock; exit 1" SIGHUP SIGINT SIGTERM
+smartvpn_work="/var/run/smartvpn.work"
+trap "lock -u $smartvpn_lock; rm ${smartvpn_work}; exit 2" SIGHUP SIGINT SIGTERM
 lock $smartvpn_lock
+echo $$ > ${smartvpn_work}
 
 retval=0
 
@@ -393,13 +388,18 @@ case $OPT in
         fi
     ;;
 
+    status)
+        smartvpn_status
+        retval=$?
+    ;;
+
     *)
         smartvpn_usage
         retval=$?
     ;;
 esac
 
+rm ${smartvpn_work}
 lock -u $smartvpn_lock
-rm $smartvpn_lock
 
 exit $retval
