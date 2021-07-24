@@ -357,9 +357,10 @@ case $OPT in
         if [ $? -ne 0 ]; then
             echo "***Error*** The vpnserver dose not setup with upstream connection"
             retval=3
+        else
+            smartvpn_open
+            retval=$?
         fi
-        smartvpn_open
-        retval=$?
     ;;
 
     off)

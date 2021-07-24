@@ -395,6 +395,18 @@ backup_file(){
     cp -p $ifname $SMARTVPN_BACKUP_DIR/$bfname
 }
 
+config_vpnserver(){
+    local new_config_file=$1
+    smartvpn_logger "Stoping vpnserver"
+    /etc/init.d/softethervpnserver stop
+    sleep 2
+    backup_file /usr/libexec/softethervpn/vpn_server.config
+    cp -p $new_config_file  /usr/libexec/softethervpn/vpn_server.config
+    smartvpn_logger "Starting vpnserver"    
+    /etc/init.d/softethervpnserver start
+    sleep 3
+}
+
 usage()
 {
     echo
@@ -467,25 +479,23 @@ case $action in
     if [[ -f ./service/vpn_server.config || -f $SMARTVPN_SECONFIG ]]; then
         
         echo
-        echo "Stoping vpnserver"
-        /etc/init.d/softethervpnserver stop
-        sleep 2
-        backup_file /usr/libexec/softethervpn/vpn_server.config
-
         if [[ -f $SMARTVPN_SECONFIG ]]; then
-            echo "Setting vpnserver with user specific config..."
-            cp -p $SMARTVPN_SECONFIG  /usr/libexec/softethervpn/vpn_server.config
+            smartvpn_logger "Setting vpnserver with user specific config..."
+            config_vpnserver $SMARTVPN_SECONFIG
         else
-            echo "Setting vpnserver with system default config(no upstream connection)..."
-            cp -p ./service/vpn_server.config /usr/libexec/softethervpn/vpn_server.config
+            grep 'declare Cascade0' /usr/libexec/softethervpn/vpn_server.config > /dev/null
+            if [ $? -eq 0 ]; then
+                smartvpn_logger "Current vpnserver has upstream connection defined, can not be replace with system dufault config!"
+                action=${action//vpnserver/}
+            else
+                smartvpn_logger "Setting vpnserver with system default config(no upstream connection)..."
+                config_vpnserver ./service/vpn_server.config
         fi
-
-        echo "Starting vpnserver"    
-        /etc/init.d/softethervpnserver start
-        sleep 3
+        fi
     else
         echo
-        echo "Configuration file for vpnserver is missing !!!"
+        smartvpn_logger "Can not find config file for vpnserver!!!"
+        action=${action//vpnserver/}
     fi
 esac
 
