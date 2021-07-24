@@ -491,7 +491,10 @@ case $action in
     backup_file /etc/config/luci_statistics
     cp -p ./service/luci_statistics /etc/config/luci_statistics
     echo "Restarting luci_statistics service..."
+    /etc/init.d/collectd restart
     /etc/init.d/luci_statistics restart
+    rm -f /tmp/luci-indexcache*
+    rm -rf /tmp/luci-modulecache/
 esac
 
 case $action in
