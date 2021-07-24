@@ -273,6 +273,9 @@ handle_rule() {
     elif [[ "$src" == "$SMARTVPN_FW_SSH_SRC" && "$dest_port" == "$SMARTVPN_FW_SSH_DEST_PORT" ]]; then
         echo "Old $SMARTVPN_FW_SSH_NAME($config) rule found, deleting"
         uci delete firewall.$config
+    elif [[ "$src" == "$SMARTVPN_FW_WEB_SRC" && "$dest_port" == "$SMARTVPN_FW_WEB_DEST_PORT" ]]; then
+        echo "Old $SMARTVPN_FW_WEB_NAME($config) rule found, deleting"
+        uci delete firewall.$config
     fi
 }
 echo
@@ -311,6 +314,17 @@ config=`uci -q batch` <<-EOF
     set firewall.@rule[-1].src_ip="$SMARTVPN_FW_SSH_SRC_IP"
     set firewall.@rule[-1].dest_port="$SMARTVPN_FW_SSH_DEST_PORT"
     set firewall.@rule[-1].target="$SMARTVPN_FW_SSH_TARGET"
+    commit firewall
+EOF
+uci show firewall.$config
+echo "Adding new $SMARTVPN_FW_WEB_NAME rule"
+config=`uci -q batch` <<-EOF
+	add firewall rule
+	set firewall.@rule[-1].name="$SMARTVPN_FW_WEB_NAME"
+    set firewall.@rule[-1].src="$SMARTVPN_FW_WEB_SRC"
+    set firewall.@rule[-1].src_ip="$SMARTVPN_FW_WEB_SRC_IP"
+    set firewall.@rule[-1].dest_port="$SMARTVPN_FW_WEB_DEST_PORT"
+    set firewall.@rule[-1].target="$SMARTVPN_FW_WEB_TARGET"
     commit firewall
 EOF
 uci show firewall.$config
