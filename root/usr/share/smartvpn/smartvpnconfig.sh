@@ -552,6 +552,9 @@ case $action in
     ;;
 esac
 
+lock -u $smartvpn_lock
+rm $smartvpn_lock
+
 if [[ "$DO_NOT_RESTART" == 0 ]]; then
     case $action in
         *mwan3*|*domain*|*network*|*vpnserver*) 
@@ -561,9 +564,6 @@ if [[ "$DO_NOT_RESTART" == 0 ]]; then
         ;;
     esac
 fi
-
-lock -u $smartvpn_lock
-rm $smartvpn_lock
 
 echo
 echo "--- Config is done ---"
