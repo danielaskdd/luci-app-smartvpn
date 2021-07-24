@@ -347,10 +347,12 @@ check_env(){
     check_installed_package dnsmasq-full && check_installed_package softethervpn-server \
         && check_installed_package mwan3 && check_installed_package luci-app-smartvpn
 
-    if [[ "$?" != 0 ]]; then
+    if [ $? -ne 0 ]; then
         echo "Error: required package is missing. Config abort!"
-        return 1
+        exit 2
     fi
+
+    return 0
 }
 
 SMARTVPN_BACKUP_DIR=/etc/smartvpn/backup

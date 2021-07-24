@@ -22,6 +22,10 @@ ipset_create(){
 }
 
 start() {
+	# check if first time installation
+	if [[ ! -d /etc/smartvpn/backup ]]; then
+		VPN_CONFIG_PARM="--localip all"
+	fi
 	if [[ -n "$VPN_CONFIG_PARM" ]]; then
 		logger -s -t softether "Config SmartVPN with parm: $VPN_CONFIG_PARM"
 		/usr/share/smartvpn/smartvpnconfig.sh --norestart $VPN_CONFIG_PARM
