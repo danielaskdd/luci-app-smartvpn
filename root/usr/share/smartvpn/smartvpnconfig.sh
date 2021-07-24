@@ -444,6 +444,10 @@ fi
 # 检查安装环境
 check_env
 
+smartvpn_lock="/var/run/smartvpn.lock"
+trap "lock -u $smartvpn_lock; rm $smartvpn_lock; exit 1" SIGHUP SIGINT SIGTERM
+lock $smartvpn_lock
+
 case $action in
     *vpnserver*) 
     if [[ -f ./service/vpn_server.config || -f $SMARTVPN_SECONFIG ]]; then
@@ -543,6 +547,9 @@ if [[ "$DO_NOT_RESTART" == 0 ]]; then
         ;;
     esac
 fi
+
+lock -u $smartvpn_lock
+rm $smartvpn_lock
 
 echo
 echo "--- Config is done ---"

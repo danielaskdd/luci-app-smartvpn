@@ -67,11 +67,14 @@ return L.view.extend({
 			return L.resolveDefault(fs.read_direct('/var/run/smartvpn.lock')).then(function(res) {
 
 				var status = document.getElementById('status');
+				var reload = document.getElementById('btn_reload');
+				var snapshot = document.getElementById('btn_snapshot');
+				var restore = document.getElementById('btn_restore');
 
 				if (status && res) {  // status is pending
 					if (!status.classList.contains("spinning")) {
 						status.classList.add("spinning");
-					}				
+					}
 				} else if (status) {
 					if (status.classList.contains("spinning")) {
 						status.classList.remove("spinning");
@@ -80,7 +83,19 @@ return L.view.extend({
 				}
 
 				L.resolveDefault(fs.exec_direct('/usr/sbin/smartvpn.sh', ['status', 'short']), '').then(function(res) {
+
 					var result = res.split("\n");
+
+					if (result[0].indexOf("OFF")>0) {
+						reload.disabled=true;
+						snapshot.disabled=true;
+						restore.disabled=true;
+					} else {
+						reload.disabled=false;
+						snapshot.disabled=false;
+						restore.disabled=false;
+					}
+
 					if (status && result[0]) {
 						status.textContent = result[0];
 					}
@@ -139,14 +154,14 @@ return L.view.extend({
 						})
 					}, [ _('Restore snapshot') ]),
 					'\xa0\xa0\xa0',
-					E('button', {
-						'class': 'cbi-button cbi-button-reset',
-						'id': 'btn_restart',
-						'click': ui.createHandlerFn(this, function() {
-							return handleAction('restart');
-						})
-					}, [ _('Hard restart') ]),
-					'\xa0\xa0\xa0',
+					// E('button', {
+					// 	'class': 'cbi-button cbi-button-reset',
+					// 	'id': 'btn_restart',
+					// 	'click': ui.createHandlerFn(this, function() {
+					// 		return handleAction('restart');
+					// 	})
+					// }, [ _('Hard restart') ]),
+					// '\xa0\xa0\xa0',
 					E('button', {
 						'class': 'cbi-button cbi-button-save',
 						'id': 'btn_reload',
