@@ -491,13 +491,20 @@ esac
 
 case $action in
     *network*) 
-    backup_file /etc/config/network
-    backup_file /etc/config/firewall
-    process_network_firewall
+    config_load network
+    config_get lan2rt_ifname lan2rt ifname
     echo 
-    echo "Restarting network..."
-    /etc/init.d/network restart
-    sleep 2
+    if [[ -n "$lan2rt_ifname" ]]; then
+        echo "This is a side router, network config skipped!!!"
+        action=${action//network/}
+    else
+        backup_file /etc/config/network
+        backup_file /etc/config/firewall
+        process_network_firewall
+        echo "Restarting network..."
+        /etc/init.d/network restart
+        sleep 2
+    fi
 esac
 
 case $action in
