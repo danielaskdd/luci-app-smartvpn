@@ -4,7 +4,7 @@
 include $(TOPDIR)/rules.mk
 
 LUCI_TITLE:=LuCI support for SmartVPN
-LUCI_DEPENDS:=+softethervpn-server +mwan3 +luci-lib-jsonc
+LUCI_DEPENDS:=+softethervpn-server +luci-lib-jsonc +luci-app-mwan3 +luci-app-statistics +luci-app-nlbwmon
 LUCI_PKGARCH:=all
 
 PKG_LICENSE:=Apache-2.0
