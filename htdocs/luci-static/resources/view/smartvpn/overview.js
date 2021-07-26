@@ -57,7 +57,7 @@ async function handleAction(ev) {
 				}
 
 				ui.showModal(_('Apply user configuration?'), [
-					E('p', _('User config files recieved. Press "Continue" to apply and restart SmartVPN. <b> If LAN IP is chanaged, you must reconnect manually<b>.')),
+					E('p', _('User config files recieved. Press "Continue" to apply and restart SmartVPN. <b> If LAN IP is chanaged, you must reconnect manually</b>.')),
 					E('pre', {}, [ res.stdout ]),
 					E('div', { 'class': 'right' }, [
 						E('button', {
@@ -70,7 +70,7 @@ async function handleAction(ev) {
 							'class': 'btn cbi-button-action important',
 							'click': ui.createHandlerFn(this, function(ev) {
 								ui.addNotification(null, [
-									E('p', _('It take about 2 mins to apply user configuration. If the <b>LAN IP is chanaged, you need to reconnect manually<b>.')),
+									E('p', _('It take about 2 mins to apply user configuration. If the <b>LAN IP is chanaged, you need to reconnect manually</b>.')),
 									res.stderr ? E('pre', {}, [ res.stderr ]) : ''
 								]);
 								return fs.exec('/usr/share/smartvpn/userconfig', [ '--apply', '/tmp/smartvpn.userconf' ]).then(function(res) {
