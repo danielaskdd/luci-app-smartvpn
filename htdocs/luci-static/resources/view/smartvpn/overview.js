@@ -14,7 +14,7 @@
 */
 async function handleAction(ev) {
 	if (ev === 'reload' || ev === 'restart') {
-		L.Poll.start();   //确保页面开启刷新
+		// L.Poll.start();
 
 		if (ev === 'reload') {
 			fs.exec_direct('/usr/sbin/smartvpn.sh', ['on']);
@@ -32,7 +32,7 @@ async function handleAction(ev) {
 		}
 	}
 	if (ev === 'save' || ev === 'restore') {
-		L.Poll.start();   //确保页面开启刷新
+		// L.Poll.start();
 
 		fs.exec_direct('/usr/sbin/smartvpn.sh', [ev]);
 
@@ -46,15 +46,64 @@ async function handleAction(ev) {
 			})
 		}
 	}
+	if (ev === 'upload') {
+		// L.Poll.start();
+		ui.uploadFile('/tmp/smartvpn.userconf').then(function(res){
+
+			fs.exec('/usr/share/smartvpn/userconfig', [ '--check', '/tmp/smartvpn.userconf' ]).then(function(res){
+				if (res.code != 0) {
+					L.ui.addNotification(null, E('p', _('The uploaded user configuration is not readable')));
+					return fs.remove('/tmp/smartvpn.userconf');
+				}
+
+				ui.showModal(_('Apply user configuration?'), [
+					E('p', _('User config files recieved. Press "Continue" to apply and restart SmartVPN. <b> If LAN IP is chanaged, you must reconnect manually<b>.')),
+					E('pre', {}, [ res.stdout ]),
+					E('div', { 'class': 'right' }, [
+						E('button', {
+							'class': 'btn',
+							'click': ui.createHandlerFn(this, function(ev) {
+								return fs.remove('/tmp/smartvpn.userconf').finally(ui.hideModal());
+							})
+						}, [ _('Cancel') ]), ' ',
+						E('button', {
+							'class': 'btn cbi-button-action important',
+							'click': ui.createHandlerFn(this, function(ev) {
+								ui.addNotification(null, [
+									E('p', _('It take about 2 mins to apply user configuration. If the <b>LAN IP is chanaged, you need to reconnect manually<b>.')),
+									res.stderr ? E('pre', {}, [ res.stderr ]) : ''
+								]);
+								return fs.exec('/usr/share/smartvpn/userconfig', [ '--apply', '/tmp/smartvpn.userconf' ]).then(function(res) {
+									if (res.code != 0) {
+										ui.addNotification(null, [
+											E('p', _('Apply user configuration failed with code %d').format(res.code)),
+											res.stderr ? E('pre', {}, [ res.stderr ]) : ''
+										]);
+									} else {
+										ui.addNotification(null, [
+											E('p', _('User configuration applied successfully.')),
+											res.stderr ? E('pre', {}, [ res.stderr ]) : ''
+										]);
+									};
+									fs.remove('/tmp/smartvpn.userconf')
+								}).finally(ui.hideModal());
+							})
+						}, [ _('Continue') ])
+					]),
+				]);
+			})
+		})
+	}
 }
 
 return L.view.extend({
 	load: function() {
 		return L.resolveDefault(fs.exec_direct('/usr/sbin/smartvpn.sh', ['status', 'short']), '');
 	},
-
+				
 	render: function(res) {
 		var m, s, o;
+		var ss;
 
 		var result = res.split("\n");
 
@@ -67,10 +116,6 @@ return L.view.extend({
 			return L.resolveDefault(fs.read_direct('/var/run/smartvpn.work')).then(function(res) {
 
 				var status = document.getElementById('status');
-				var reload = document.getElementById('btn_reload');
-				var snapshot = document.getElementById('btn_snapshot');
-				var restore = document.getElementById('btn_restore');
-
 				if (status && res) {  // status is pending
 					if (!status.classList.contains("spinning")) {
 						status.classList.add("spinning");
@@ -84,15 +129,18 @@ return L.view.extend({
 				L.resolveDefault(fs.exec_direct('/usr/sbin/smartvpn.sh', ['status', 'short']), '').then(function(res) {
 
 					var result = res.split("\n");
-
+					var btn_snapshot = document.getElementById('btn_snapshot');
+					var btn_restore = document.getElementById('btn_restore');
+					var btn_reload = document.getElementById('btn_reload');
+		
 					if (result[0].indexOf("ON")>0) {
-						reload.disabled=false;
-						snapshot.disabled=false;
-						restore.disabled=false;
+						btn_snapshot.disabled=false;
+						btn_restore.disabled=false;
+						btn_reload.disabled=false;
 					} else {
-						reload.disabled=true;
-						snapshot.disabled=true;
-						restore.disabled=true;
+						btn_snapshot.disabled=true;
+						btn_restore.disabled=true;
+						btn_reload.disabled=true;
 					}
 
 					if (status && result[0]) {
@@ -115,7 +163,7 @@ return L.view.extend({
 					}
 				})	
 			})
-		}, 1);
+		}, 2);
 
 		/*
 			runtime information and buttons
@@ -192,7 +240,27 @@ return L.view.extend({
 		o.rmempty = true;
 		o.datatype = "string";
 
+		s = m.section(form.NamedSection, 'global');
+		s.render = L.bind(function(view, section_id) {
+			return E('div', { 'class': 'cbi-section' }, [
+				E('h3', _('User Configuration')), 
+				E('div', { 'class': 'cbi-value', 'style': 'margin-bottom:5px' }, [
+				E('label', { 'class': 'cbi-value-title', 'style': 'padding-top:0rem' }, _('User settings')),
+				E('div', { 'class': 'cbi-value-field', 'id': 'upload_status'},'upload user config file'),
+				// '\xa0\xa0\xa0\xa0',
+				E('button', {
+					'class': 'cbi-button cbi-button-apply cbi-value-field',
+					'id': 'btn_upload',
+					'click': ui.createHandlerFn(this, function() {
+						return handleAction('upload');
+					})
+					}, [ _('Upload')])
+				])
+			])
+		}, o, this);
+
 		return m.render();
 	},
+
 	handleReset: null
 });

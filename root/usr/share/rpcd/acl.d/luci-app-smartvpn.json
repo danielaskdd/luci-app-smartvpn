@@ -5,7 +5,8 @@
 			"uci": [ "smartvpn" ],
 			"cgi-io": [ "upload" ],
 			"file": {
-				"/etc/smartvpn/user*": [ "write" ]
+				"/etc/smartvpn/user*": [ "write" ],
+				"/tmp/smartvpn.userconf": [ "write" ]
 			}
 		},
 		"read": {
@@ -15,6 +16,7 @@
 				"/etc/smartvpn/user*": [ "read" ],
 				"/usr/sbin/smartvpn.sh *": [ "exec" ],
 				"/etc/init.d/smartvpn *" : [ "exec" ],
+				"/usr/share/smartvpn/userconfig *" : [ "exec" ],
 				"/var/run/smartvpn.work" : [ "read" ]
 			}
 		}

@@ -1,4 +1,0 @@
-#netxxx.xxx.xxx.xxxyy
-#domain
-101.32.0.016
-124.156.128.017

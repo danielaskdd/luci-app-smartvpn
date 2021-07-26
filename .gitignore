@@ -2,6 +2,7 @@
 *.code-workspace
 .DS_Store
 luasrc/i18n
+userconfig
 
 # Compiled Lua sources
 luac.out
