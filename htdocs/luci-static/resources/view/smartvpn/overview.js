@@ -161,6 +161,11 @@ return L.view.extend({
 					if (oversea && result[1]) {
 						oversea.textContent = result[3];
 					}
+
+					var oversea = document.getElementById('user_info');
+					if (oversea && result[1]) {
+						oversea.textContent = result[4];
+					}
 				})	
 			})
 		}, 2);
@@ -245,8 +250,8 @@ return L.view.extend({
 			return E('div', { 'class': 'cbi-section' }, [
 				E('h3', _('User Configuration')), 
 				E('div', { 'class': 'cbi-value', 'style': 'margin-bottom:5px' }, [
-				E('label', { 'class': 'cbi-value-title', 'style': 'padding-top:0rem' }, _('User settings')),
-				E('div', { 'class': 'cbi-value-field', 'id': 'upload_status'},_('upload user config file')),
+				E('label', { 'class': 'cbi-value-title', 'style': 'padding-top:0rem' }, _('User info')),
+				E('div', { 'class': 'cbi-value-field', 'id': 'user_info'},result[4]),
 				// '\xa0\xa0\xa0\xa0',
 				E('button', {
 					'class': 'cbi-button cbi-button-apply cbi-value-field',
@@ -254,7 +259,7 @@ return L.view.extend({
 					'click': ui.createHandlerFn(this, function() {
 						return handleAction('upload');
 					})
-					}, [ _('Upload')])
+					}, [ _('Upload config')])
 				])
 			])
 		}, o, this);
