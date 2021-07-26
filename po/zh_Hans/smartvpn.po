@@ -52,7 +52,7 @@ msgstr "初始化命令"
 msgid ""
 "It take about 2 mins to apply user configuration. If the LAN IP is chanaged, "
 "you need to reconnect manually."
-msgstr "修改用户配置需花费约2分钟。如果修改了局域网IP，您需要从手动新连接网络"
+msgstr "修改用户配置需花费约2分钟。如果修改了局域网IP，您需要从手动重连网络"
 
 #: htdocs/luci-static/resources/view/smartvpn/mainland.js:24
 msgid ""
@@ -181,7 +181,7 @@ msgid ""
 "SmartVPN. If LAN IP is chanaged, you must reconnect manually."
 msgstr ""
 msgstr "已收到用户配置。按“继续”将正式修改并从新启动SmartVPN。"
-msgstr "如果修改了局域网IP，您需要从手动新连接网络"
+msgstr "如果修改了局域网IP，您需要手动重连接网络"
 
 #: htdocs/luci-static/resources/view/smartvpn/overview.js:84
 msgid "User configuration applied successfully."
