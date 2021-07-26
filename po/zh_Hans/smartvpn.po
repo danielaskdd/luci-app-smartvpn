@@ -53,7 +53,7 @@ msgid ""
 "It take about 2 mins to apply user configuration. If the <b>LAN IP is "
 "chanaged, you need to reconnect manually</b>."
 msgstr ""
-msgstr "修改用户配置耗时约2分钟。如果<b>局域网IP地址被修改，您需要手动从新连接网络</b>."
+msgstr "用户配置修改需要约2分钟。如果<b>修改了局域网IP，您必须手动从新连接网络</b>。"
 
 #: htdocs/luci-static/resources/view/smartvpn/mainland.js:24
 msgid ""
@@ -168,6 +168,10 @@ msgstr "无法保存文件：%s"
 msgid "Upload"
 msgstr "上传"
 
+#: htdocs/luci-static/resources/view/smartvpn/overview.js:94
+msgid "Upload feature is not available for this device"
+msgstr "本设备不支持用户配置上传功能"
+
 #: htdocs/luci-static/resources/view/smartvpn/overview.js:246
 msgid "User Configuration"
 msgstr "用户配置"
@@ -177,8 +181,8 @@ msgid ""
 "User config files recieved. Press \"Continue\" to apply and restart "
 "SmartVPN. <b> If LAN IP is chanaged, you must reconnect manually</b>."
 msgstr ""
-msgstr "已接受到用户配置文件。按“继续"将正式修改并从新"
-msgstr "启动SmartVPN。<b>如果局域网IP地址被修改，您需要手动从新连接网络</b>."
+msgstr "已收到用户配置文件。按“继续”将修改用户配置并重新启动SmartVPN。"
+msgstr "<b>如果修改了局域网IP，您您必须手动从新连接网络</b>"
 
 #: htdocs/luci-static/resources/view/smartvpn/overview.js:84
 msgid "User configuration applied successfully."
@@ -191,3 +195,7 @@ msgstr "用户设置"
 #: htdocs/luci-static/resources/view/smartvpn/overview.js:233
 msgid "mainland DNS"
 msgstr "内地DNS"
+
+#: htdocs/luci-static/resources/view/smartvpn/overview.js:249
+msgid "upload user config file"
+msgstr "上传用户配置文件"
