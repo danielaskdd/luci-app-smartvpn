@@ -113,7 +113,7 @@ msgstr "已把主机清单恢复为原来的内容"
 
 #: htdocs/luci-static/resources/view/smartvpn/overview.js:238
 msgid "Restore initial configuration(do it at your own risk)."
-msgstr ""
+msgstr "恢复初始设置（操作需承担风险）"
 
 #: htdocs/luci-static/resources/view/smartvpn/overview.js:202
 msgid "Restore snapshot"

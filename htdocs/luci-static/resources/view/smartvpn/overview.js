@@ -90,8 +90,8 @@ async function handleAction(ev) {
 							})
 						}, [ _('Continue') ])
 					]),
-				]);
-			})
+				])
+			}).catch(function(e) { ui.addNotification(null, E('p', _('Upload feature is not available for this device'))) })
 		})
 	}
 }
@@ -246,7 +246,7 @@ return L.view.extend({
 				E('h3', _('User Configuration')), 
 				E('div', { 'class': 'cbi-value', 'style': 'margin-bottom:5px' }, [
 				E('label', { 'class': 'cbi-value-title', 'style': 'padding-top:0rem' }, _('User settings')),
-				E('div', { 'class': 'cbi-value-field', 'id': 'upload_status'},'upload user config file'),
+				E('div', { 'class': 'cbi-value-field', 'id': 'upload_status'},_('upload user config file')),
 				// '\xa0\xa0\xa0\xa0',
 				E('button', {
 					'class': 'cbi-button cbi-button-apply cbi-value-field',
