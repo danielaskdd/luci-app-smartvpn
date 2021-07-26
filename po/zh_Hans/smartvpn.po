@@ -23,11 +23,11 @@ msgstr "修改已经保存。重新启动SmartVPN后配置生效"
 msgid "Continue"
 msgstr "继续"
 
-#: htdocs/luci-static/resources/view/smartvpn/overview.js:230
+#: htdocs/luci-static/resources/view/smartvpn/overview.js:235
 msgid "Enable SmartVPN service."
 msgstr "启动SmartVPN服务"
 
-#: htdocs/luci-static/resources/view/smartvpn/overview.js:230
+#: htdocs/luci-static/resources/view/smartvpn/overview.js:235
 msgid "Enabled"
 msgstr "启动"
 
@@ -36,24 +36,23 @@ msgstr "启动"
 msgid "Hongkong hosts"
 msgstr "香港主机"
 
-#: htdocs/luci-static/resources/view/smartvpn/overview.js:182
+#: htdocs/luci-static/resources/view/smartvpn/overview.js:187
 msgid "Hongkong ips"
 msgstr "香港ip"
 
-#: htdocs/luci-static/resources/view/smartvpn/overview.js:174
+#: htdocs/luci-static/resources/view/smartvpn/overview.js:179
 msgid "Information"
 msgstr "信息"
 
-#: htdocs/luci-static/resources/view/smartvpn/overview.js:238
+#: htdocs/luci-static/resources/view/smartvpn/overview.js:243
 msgid "Init cmd"
 msgstr "初始化命令"
 
 #: htdocs/luci-static/resources/view/smartvpn/overview.js:73
 msgid ""
-"It take about 2 mins to apply user configuration. If the <b>LAN IP is "
-"chanaged, you need to reconnect manually</b>."
-msgstr ""
-msgstr "用户配置修改需要约2分钟。如果<b>修改了局域网IP，您必须手动从新连接网络</b>。"
+"It take about 2 mins to apply user configuration. If the LAN IP is chanaged, "
+"you need to reconnect manually."
+msgstr "修改用户配置需花费约2分钟。如果修改了局域网IP，您需要从手动新连接网络"
 
 #: htdocs/luci-static/resources/view/smartvpn/mainland.js:24
 msgid ""
@@ -87,7 +86,7 @@ msgstr ""
 msgid "Mainland hosts"
 msgstr "内地主机"
 
-#: htdocs/luci-static/resources/view/smartvpn/overview.js:179
+#: htdocs/luci-static/resources/view/smartvpn/overview.js:184
 msgid "Mainland ips"
 msgstr "内地ip"
 
@@ -96,7 +95,7 @@ msgstr "内地ip"
 msgid "Oversea hosts"
 msgstr "海外主机"
 
-#: htdocs/luci-static/resources/view/smartvpn/overview.js:185
+#: htdocs/luci-static/resources/view/smartvpn/overview.js:190
 msgid "Oversea ips"
 msgstr "海外ip"
 
@@ -111,15 +110,15 @@ msgstr "概览"
 msgid "Restore hosts list to original content"
 msgstr "已把主机清单恢复为原来的内容"
 
-#: htdocs/luci-static/resources/view/smartvpn/overview.js:238
+#: htdocs/luci-static/resources/view/smartvpn/overview.js:243
 msgid "Restore initial configuration(do it at your own risk)."
 msgstr "恢复初始设置（操作需承担风险）"
 
-#: htdocs/luci-static/resources/view/smartvpn/overview.js:202
+#: htdocs/luci-static/resources/view/smartvpn/overview.js:207
 msgid "Restore snapshot"
 msgstr "恢复快照"
 
-#: htdocs/luci-static/resources/view/smartvpn/overview.js:194
+#: htdocs/luci-static/resources/view/smartvpn/overview.js:199
 msgid "Save snapshot"
 msgstr "保存快照"
 
@@ -127,7 +126,7 @@ msgstr "保存快照"
 msgid "Select the best route for Internet Access."
 msgstr "选择互联网访问的最佳路由"
 
-#: htdocs/luci-static/resources/view/smartvpn/overview.js:228
+#: htdocs/luci-static/resources/view/smartvpn/overview.js:233
 msgid "Settings"
 msgstr "设置"
 
@@ -136,15 +135,15 @@ msgstr "设置"
 msgid "SmartVPN"
 msgstr "SmartVPN"
 
-#: htdocs/luci-static/resources/view/smartvpn/overview.js:218
+#: htdocs/luci-static/resources/view/smartvpn/overview.js:223
 msgid "Soft restart"
 msgstr "软重启"
 
-#: htdocs/luci-static/resources/view/smartvpn/overview.js:176
+#: htdocs/luci-static/resources/view/smartvpn/overview.js:181
 msgid "Status"
 msgstr "状态"
 
-#: htdocs/luci-static/resources/view/smartvpn/overview.js:233
+#: htdocs/luci-static/resources/view/smartvpn/overview.js:238
 msgid "The DNS ip from your ISP or fastest DNS for mainland getway."
 msgstr "用户内地主机的DNS服务器ip（来自你的ISP或当地访问速度最快的DNS）"
 
@@ -164,38 +163,35 @@ msgstr "无法读取文件：%s"
 msgid "Unable to save changes: %s"
 msgstr "无法保存文件：%s"
 
-#: htdocs/luci-static/resources/view/smartvpn/overview.js:257
-msgid "Upload"
-msgstr "上传"
+#: htdocs/luci-static/resources/view/smartvpn/overview.js:262
+msgid "Upload config"
+msgstr "上传用户配置"
 
 #: htdocs/luci-static/resources/view/smartvpn/overview.js:94
 msgid "Upload feature is not available for this device"
 msgstr "本设备不支持用户配置上传功能"
 
-#: htdocs/luci-static/resources/view/smartvpn/overview.js:246
+#: htdocs/luci-static/resources/view/smartvpn/overview.js:251
 msgid "User Configuration"
 msgstr "用户配置"
 
 #: htdocs/luci-static/resources/view/smartvpn/overview.js:60
 msgid ""
 "User config files recieved. Press \"Continue\" to apply and restart "
-"SmartVPN. <b> If LAN IP is chanaged, you must reconnect manually</b>."
+"SmartVPN. If LAN IP is chanaged, you must reconnect manually."
 msgstr ""
-msgstr "已收到用户配置文件。按“继续”将修改用户配置并重新启动SmartVPN。"
-msgstr "<b>如果修改了局域网IP，您您必须手动从新连接网络</b>"
+msgstr "已收到用户配置。按“继续”将正式修改并从新启动SmartVPN。"
+msgstr "如果修改了局域网IP，您需要从手动新连接网络"
 
 #: htdocs/luci-static/resources/view/smartvpn/overview.js:84
 msgid "User configuration applied successfully."
 msgstr "已成功修改用户配置"
 
-#: htdocs/luci-static/resources/view/smartvpn/overview.js:248
-msgid "User settings"
-msgstr "用户设置"
+#: htdocs/luci-static/resources/view/smartvpn/overview.js:253
+msgid "User info"
+msgstr "用户信息"
 
-#: htdocs/luci-static/resources/view/smartvpn/overview.js:233
+#: htdocs/luci-static/resources/view/smartvpn/overview.js:238
 msgid "mainland DNS"
 msgstr "内地DNS"
 
-#: htdocs/luci-static/resources/view/smartvpn/overview.js:249
-msgid "upload user config file"
-msgstr "上传用户配置文件"

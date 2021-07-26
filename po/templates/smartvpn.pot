@@ -23,11 +23,11 @@ msgstr ""
 msgid "Continue"
 msgstr ""
 
-#: htdocs/luci-static/resources/view/smartvpn/overview.js:230
+#: htdocs/luci-static/resources/view/smartvpn/overview.js:235
 msgid "Enable SmartVPN service."
 msgstr ""
 
-#: htdocs/luci-static/resources/view/smartvpn/overview.js:230
+#: htdocs/luci-static/resources/view/smartvpn/overview.js:235
 msgid "Enabled"
 msgstr ""
 
@@ -36,22 +36,22 @@ msgstr ""
 msgid "Hongkong hosts"
 msgstr ""
 
-#: htdocs/luci-static/resources/view/smartvpn/overview.js:182
+#: htdocs/luci-static/resources/view/smartvpn/overview.js:187
 msgid "Hongkong ips"
 msgstr ""
 
-#: htdocs/luci-static/resources/view/smartvpn/overview.js:174
+#: htdocs/luci-static/resources/view/smartvpn/overview.js:179
 msgid "Information"
 msgstr ""
 
-#: htdocs/luci-static/resources/view/smartvpn/overview.js:238
+#: htdocs/luci-static/resources/view/smartvpn/overview.js:243
 msgid "Init cmd"
 msgstr ""
 
 #: htdocs/luci-static/resources/view/smartvpn/overview.js:73
 msgid ""
-"It take about 2 mins to apply user configuration. If the <b>LAN IP is "
-"chanaged, you need to reconnect manually</b>."
+"It take about 2 mins to apply user configuration. If the LAN IP is chanaged, "
+"you need to reconnect manually."
 msgstr ""
 
 #: htdocs/luci-static/resources/view/smartvpn/mainland.js:24
@@ -80,7 +80,7 @@ msgstr ""
 msgid "Mainland hosts"
 msgstr ""
 
-#: htdocs/luci-static/resources/view/smartvpn/overview.js:179
+#: htdocs/luci-static/resources/view/smartvpn/overview.js:184
 msgid "Mainland ips"
 msgstr ""
 
@@ -89,7 +89,7 @@ msgstr ""
 msgid "Oversea hosts"
 msgstr ""
 
-#: htdocs/luci-static/resources/view/smartvpn/overview.js:185
+#: htdocs/luci-static/resources/view/smartvpn/overview.js:190
 msgid "Oversea ips"
 msgstr ""
 
@@ -104,15 +104,15 @@ msgstr ""
 msgid "Restore hosts list to original content"
 msgstr ""
 
-#: htdocs/luci-static/resources/view/smartvpn/overview.js:238
+#: htdocs/luci-static/resources/view/smartvpn/overview.js:243
 msgid "Restore initial configuration(do it at your own risk)."
 msgstr ""
 
-#: htdocs/luci-static/resources/view/smartvpn/overview.js:202
+#: htdocs/luci-static/resources/view/smartvpn/overview.js:207
 msgid "Restore snapshot"
 msgstr ""
 
-#: htdocs/luci-static/resources/view/smartvpn/overview.js:194
+#: htdocs/luci-static/resources/view/smartvpn/overview.js:199
 msgid "Save snapshot"
 msgstr ""
 
@@ -120,7 +120,7 @@ msgstr ""
 msgid "Select the best route for Internet Access."
 msgstr ""
 
-#: htdocs/luci-static/resources/view/smartvpn/overview.js:228
+#: htdocs/luci-static/resources/view/smartvpn/overview.js:233
 msgid "Settings"
 msgstr ""
 
@@ -129,15 +129,15 @@ msgstr ""
 msgid "SmartVPN"
 msgstr ""
 
-#: htdocs/luci-static/resources/view/smartvpn/overview.js:218
+#: htdocs/luci-static/resources/view/smartvpn/overview.js:223
 msgid "Soft restart"
 msgstr ""
 
-#: htdocs/luci-static/resources/view/smartvpn/overview.js:176
+#: htdocs/luci-static/resources/view/smartvpn/overview.js:181
 msgid "Status"
 msgstr ""
 
-#: htdocs/luci-static/resources/view/smartvpn/overview.js:233
+#: htdocs/luci-static/resources/view/smartvpn/overview.js:238
 msgid "The DNS ip from your ISP or fastest DNS for mainland getway."
 msgstr ""
 
@@ -157,36 +157,32 @@ msgstr ""
 msgid "Unable to save changes: %s"
 msgstr ""
 
-#: htdocs/luci-static/resources/view/smartvpn/overview.js:257
-msgid "Upload"
+#: htdocs/luci-static/resources/view/smartvpn/overview.js:262
+msgid "Upload config"
 msgstr ""
 
 #: htdocs/luci-static/resources/view/smartvpn/overview.js:94
 msgid "Upload feature is not available for this device"
 msgstr ""
 
-#: htdocs/luci-static/resources/view/smartvpn/overview.js:246
+#: htdocs/luci-static/resources/view/smartvpn/overview.js:251
 msgid "User Configuration"
 msgstr ""
 
 #: htdocs/luci-static/resources/view/smartvpn/overview.js:60
 msgid ""
 "User config files recieved. Press \"Continue\" to apply and restart "
-"SmartVPN. <b> If LAN IP is chanaged, you must reconnect manually</b>."
+"SmartVPN. If LAN IP is chanaged, you must reconnect manually."
 msgstr ""
 
 #: htdocs/luci-static/resources/view/smartvpn/overview.js:84
 msgid "User configuration applied successfully."
 msgstr ""
 
-#: htdocs/luci-static/resources/view/smartvpn/overview.js:248
-msgid "User settings"
+#: htdocs/luci-static/resources/view/smartvpn/overview.js:253
+msgid "User info"
 msgstr ""
 
-#: htdocs/luci-static/resources/view/smartvpn/overview.js:233
+#: htdocs/luci-static/resources/view/smartvpn/overview.js:238
 msgid "mainland DNS"
-msgstr ""
-
-#: htdocs/luci-static/resources/view/smartvpn/overview.js:249
-msgid "upload user config file"
 msgstr ""
