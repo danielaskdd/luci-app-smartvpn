@@ -70,7 +70,7 @@ async function handleAction(ev) {
 							'class': 'btn cbi-button-action important',
 							'click': ui.createHandlerFn(this, function(ev) {
 								ui.addNotification(null, [
-									E('p', _('It take about 2 mins to apply user configuration. If the LAN IP is chanaged, you need to reconnect manually.')),
+									E('p', _('Reload this page if the status keep spinning after 2 minutes. If LAN IP is chanaged, please unplug and plug back your network cable to reconnect the router.')),
 									res.stderr ? E('pre', {}, [ res.stderr ]) : ''
 								]);
 								return fs.exec('/usr/share/smartvpn/userconfig', [ '--apply', '/tmp/smartvpn.userconf' ]).then(function(res) {
@@ -81,7 +81,7 @@ async function handleAction(ev) {
 										]);
 									} else {
 										ui.addNotification(null, [
-											E('p', _('User configuration applied successfully.')),
+											E('p', _('User configuration applied successfully.'), 'info'),
 											res.stderr ? E('pre', {}, [ res.stderr ]) : ''
 										]);
 									};
