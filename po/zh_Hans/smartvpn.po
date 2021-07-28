@@ -104,8 +104,9 @@ msgid ""
 "chanaged, please unplug and plug back your network cable to reconnect the "
 "router."
 msgstr ""
-msgstr "2分鐘後狀態欄仍在轉動請從新家在本頁面。如果修改了局域網IP，"
-msgstr "為了能夠從新連接路由器您需要拔下並插回您PC上的網線"
+msgstr "2分钟后状态栏仍在转动请从新家在本页面。如果修改了局域网IP，"
+msgstr "为了能够重新连接路由器，您需要拔下并插回您PC上"
+msgstr "的网线"
 
 #: htdocs/luci-static/resources/view/smartvpn/hongkong.js:39
 #: htdocs/luci-static/resources/view/smartvpn/mainland.js:39
@@ -183,8 +184,8 @@ msgid ""
 "User config files recieved. Press \"Continue\" to apply and restart "
 "SmartVPN. If LAN IP is chanaged, you must reconnect manually."
 msgstr ""
-msgstr "已收到上傳的用戶配置。按“繼續”將正式修改並從新啟動SmartVPN。"
-msgstr "如果修改了局域網IP，您需要手動重連接網絡"
+msgstr "已收到上传的用户配置。按“继续”将正式修改并从新启动SmartVPN。"
+msgstr "如果修改了局域网IP，您需要手动重连接网络"
 
 #: htdocs/luci-static/resources/view/smartvpn/overview.js:84
 msgid "User configuration applied successfully."

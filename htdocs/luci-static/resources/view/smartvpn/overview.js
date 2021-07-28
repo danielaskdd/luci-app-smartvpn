@@ -80,10 +80,7 @@ async function handleAction(ev) {
 											res.stderr ? E('pre', {}, [ res.stderr ]) : ''
 										]);
 									} else {
-										ui.addNotification(null, [
-											E('p', _('User configuration applied successfully.'), 'info'),
-											res.stderr ? E('pre', {}, [ res.stderr ]) : ''
-										]);
+										ui.addNotification(null, E('p', _('User configuration applied successfully.')), 'info');
 									};
 									fs.remove('/tmp/smartvpn.userconf')
 								}).finally(ui.hideModal());
