@@ -8,6 +8,8 @@
 . /lib/functions.sh
 . /lib/functions/network.sh
 
+SMARTVPN_VER='v1.0.1'
+
 smartvpn_logger()
 {
     logger -s -t smartvpn "$1"
@@ -205,12 +207,12 @@ smartvpn_status()
     else
         network_is_up lanman
         if [ $? -ne 0 ]; then
-            echo "VPN tunnel is missing"
+            echo "VPN tunnel is missing ($SMARTVPN_VER)"
         else
             if [ $vpn_status == "on" ]; then
-                echo "SmartVPN is ON"
+                echo "SmartVPN is ON ($SMARTVPN_VER)"
             else
-                echo "SmartVPN is OFF"
+                echo "SmartVPN is OFF ($SMARTVPN_VER)"
             fi
         fi
     fi
