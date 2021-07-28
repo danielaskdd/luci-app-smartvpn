@@ -7,6 +7,21 @@ uci -q batch <<-EOF >/dev/null
 	commit ucitrack
 EOF
 
+/etc/smartvpn
+/usr/share/smartvpn/conf
+/usr/share/smartvpn/service
+/usr/libexec/softethervpn/vpn_server.config
+/opt/rrd
+/opt/nlbwmon
+
+# update system backup config for recovery after factory reset
+grep -qxF '/etc/smartvpn' /etc/sysupgrade.conf || echo '/etc/smartvpn' >> /etc/sysupgrade.conf
+grep -qxF '/usr/share/smartvpn/conf' /etc/sysupgrade.conf || echo '/usr/share/smartvpn/conf' >> /etc/sysupgrade.conf
+grep -qxF '/usr/share/smartvpn/service' /etc/sysupgrade.conf || echo '/usr/share/smartvpn/service' >> /etc/sysupgrade.conf
+grep -qxF '/usr/libexec/softethervpn/vpn_server.config' /etc/sysupgrade.conf || echo '/usr/libexec/softethervpn/vpn_server.config' >> /etc/sysupgrade.conf
+grep -qxF '/opt/rrd' /etc/sysupgrade.conf || echo '/opt/rrd' >> /etc/sysupgrade.conf
+grep -qxF '/opt/nlbwmon' /etc/sysupgrade.conf || echo '/opt/nlbwmon' >> /etc/sysupgrade.conf
+
 # remove LuCI cache
 rm -rf /tmp/luci-indexcache /tmp/luci-modulecache
 
