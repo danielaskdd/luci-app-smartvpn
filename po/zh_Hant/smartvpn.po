@@ -48,12 +48,6 @@ msgstr "信息"
 msgid "Init cmd"
 msgstr "初始化命令"
 
-#: htdocs/luci-static/resources/view/smartvpn/overview.js:73
-msgid ""
-"It take about 2 mins to apply user configuration. If the LAN IP is chanaged, "
-"you need to reconnect manually."
-msgstr "修改用戶配置需花費約2分鐘。如果修改了局域網IP，您需要從手動重連網絡"
-
 #: htdocs/luci-static/resources/view/smartvpn/mainland.js:24
 msgid ""
 "Listed below are the hosts must be accessed via default gateway of your "
@@ -103,6 +97,15 @@ msgstr "海外ip"
 #: root/usr/share/luci/menu.d/luci-app-smartvpn.json:18
 msgid "Overview"
 msgstr "概覽"
+
+#: htdocs/luci-static/resources/view/smartvpn/overview.js:73
+msgid ""
+"Reload this page if the status keep spinning after 2 minutes. If LAN IP is "
+"chanaged, please unplug and plug back your network cable to reconnect the "
+"router."
+msgstr ""
+msgstr "2分钟后状态栏仍在转动请从新家在本页面。如果修改了局域网IP，"
+msgstr "为了能够从新连接路由器您需要拔下并插回您PC上的网线"
 
 #: htdocs/luci-static/resources/view/smartvpn/hongkong.js:39
 #: htdocs/luci-static/resources/view/smartvpn/mainland.js:39
@@ -180,8 +183,8 @@ msgid ""
 "User config files recieved. Press \"Continue\" to apply and restart "
 "SmartVPN. If LAN IP is chanaged, you must reconnect manually."
 msgstr ""
-msgstr "已收到用戶配置。按“繼續”將正式修改並從新啟動SmartVPN。"
-msgstr "如果修改了局域網IP，您需要手動重連接網絡"
+msgstr "已收到上传的用户配置。按“继续”将正式修改并从新启动SmartVPN。"
+msgstr "如果修改了局域网IP，您需要手动重连接网络"
 
 #: htdocs/luci-static/resources/view/smartvpn/overview.js:84
 msgid "User configuration applied successfully."
@@ -195,3 +198,7 @@ msgstr "用戶信息"
 msgid "mainland DNS"
 msgstr "內地DNS"
 
+#~ msgid ""
+#~ "It take about 2 mins to apply user configuration. If the LAN IP is "
+#~ "chanaged, you need to reconnect manually."
+#~ msgstr "修改用戶配置需花費約2分鐘。如果修改了局域網IP，您需要從手動重連網絡"

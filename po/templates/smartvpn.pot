@@ -48,12 +48,6 @@ msgstr ""
 msgid "Init cmd"
 msgstr ""
 
-#: htdocs/luci-static/resources/view/smartvpn/overview.js:73
-msgid ""
-"It take about 2 mins to apply user configuration. If the LAN IP is chanaged, "
-"you need to reconnect manually."
-msgstr ""
-
 #: htdocs/luci-static/resources/view/smartvpn/mainland.js:24
 msgid ""
 "Listed below are the hosts must be accessed via default gateway of your "
@@ -96,6 +90,13 @@ msgstr ""
 #: luasrc/controller/smartvpn.lua:8
 #: root/usr/share/luci/menu.d/luci-app-smartvpn.json:18
 msgid "Overview"
+msgstr ""
+
+#: htdocs/luci-static/resources/view/smartvpn/overview.js:73
+msgid ""
+"Reload this page if the status keep spinning after 2 minutes. If LAN IP is "
+"chanaged, please unplug and plug back your network cable to reconnect the "
+"router."
 msgstr ""
 
 #: htdocs/luci-static/resources/view/smartvpn/hongkong.js:39
