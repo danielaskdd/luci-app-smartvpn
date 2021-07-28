@@ -104,8 +104,8 @@ msgid ""
 "chanaged, please unplug and plug back your network cable to reconnect the "
 "router."
 msgstr ""
-"2分鐘後狀態欄仍在轉動請從新家在本頁面。如果修改了局域網IP，為了能夠從新連接路"
-"由器您需要拔下並插回您PC上的網線"
+"2分鐘後狀態欄仍在轉動請重新加載本頁面。如果修改了局域網IP，為了能夠從新連接路"
+"由器您需要拔插一次PC上的網線"
 
 #: htdocs/luci-static/resources/view/smartvpn/hongkong.js:39
 #: htdocs/luci-static/resources/view/smartvpn/mainland.js:39
