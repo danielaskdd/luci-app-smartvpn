@@ -1439,7 +1439,6 @@
 .destroy-china.jp
 .destroytwitter.com
 .deutsche-welle.de
-.developer.apple.com
 .developers.box.net
 .deviantart.com
 .deviantart.net

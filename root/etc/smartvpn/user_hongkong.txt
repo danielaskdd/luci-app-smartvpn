@@ -1,6 +1,6 @@
 # 仅加入确认从香港访问会更快的网站
+.apple.com
 .cnn.com
-.stackpathcdn.com
 .icloud.com
 .foxnews.com
 .github.com
@@ -39,8 +39,10 @@
 .googleusercontent.com
 .googlevideo.com
 .kcmetercec.top
+.stackpathcdn.com
 .msnbc.com
 .netflix.com
+.openwrt.org
 .stackexchange.com
 .twitter.com
 .twitter.com.au
@@ -51,4 +53,3 @@
 .youtube.com.br
 .youtube.com.my
 .visual-paradigm.com
-.openwrt.org

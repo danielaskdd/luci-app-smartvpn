@@ -330,7 +330,7 @@ SHORT=$2
 case $OPT in
     on)
         if [[ ! -z "$SOFT" && "$SOFT" != "hard" ]]; then
-            echo "***Error*** second parameter only support 'soft'"
+            echo "***Error*** second parameter only support 'hard'"
             exit 1
         fi
     ;;
