@@ -68,8 +68,8 @@ reload() {
 	# check if init is needed
 	smartvpn_init	
 	if [ $VPN_ENABLE == 1 ]; then
-		logger -s -t softether "Reloading SmartVPN...（soft）"
-		smartvpn.sh on
+		logger -s -t softether "Reloading SmartVPN...（hard）"
+		smartvpn.sh on hard
 	else
 		logger -s -t softether "Stoping SmartVPN..."
 		smartvpn.sh off
