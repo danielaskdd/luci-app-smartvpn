@@ -233,7 +233,7 @@ return L.view.extend({
 		o.rmempty = false;
 
 		o = s.option(form.Value, 'dns_mainland', _('mainland DNS'), _('The DNS ip from your ISP or fastest DNS for mainland getway.'));
-		o.placeholder = '127.0.0.1 or 119.29.29.29';
+		o.placeholder = '119.29.29.29';
 		o.rmempty = false;
 		o.datatype = "ip4addr";
 
