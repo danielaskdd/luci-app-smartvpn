@@ -7,7 +7,7 @@ uci -q batch <<-EOF >/dev/null
 	commit ucitrack
 EOF
 
-# update system default domain setting
+# update system default domain setting(this step is importance for update installation)
 cp -p /usr/share/smartvpn/proxy/proxy_mainland.txt /etc/smartvpn/proxy_mainland.txt
 cp -p /usr/share/smartvpn/proxy/proxy_hongkong.txt /etc/smartvpn/proxy_hongkong.txt
 cp -p /usr/share/smartvpn/proxy/proxy_oversea.txt /etc/smartvpn/proxy_oversea.txt
