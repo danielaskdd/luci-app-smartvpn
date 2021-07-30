@@ -248,8 +248,7 @@ return L.view.extend({
 				E('h3', _('User Configuration')), 
 				E('div', { 'class': 'cbi-value', 'style': 'margin-bottom:5px' }, [
 				E('label', { 'class': 'cbi-value-title', 'style': 'padding-top:0rem' }, _('User info')),
-				E('div', { 'class': 'cbi-value-field', 'id': 'user_info'},result[4]),
-				// '\xa0\xa0\xa0\xa0',
+				E('div', { 'class': 'cbi-value-field', 'id': 'user_info', 'style': 'font-weight: bold;margin-bottom:10px;' },result[4]),
 				E('button', {
 					'class': 'cbi-button cbi-button-apply cbi-value-field',
 					'id': 'btn_upload',
