@@ -152,9 +152,9 @@ smartvpn_open()
         return 1
     fi
 
-    ifdown lanman
-    ifdown vpnhub01
-    ifdown vpnhub02
+    # ifdown lanman
+    # ifdown vpnhub01
+    # ifdown vpnhub02
 
     ifup lanman
     ifup vpnhub01
