@@ -196,28 +196,20 @@ return L.view.extend({
 					}, [ _('Save snapshot') ]),
 					'\xa0\xa0\xa0',
 					E('button', {
-						'class': 'cbi-button cbi-button-apply',
-						'id': 'btn_restore',
-						'click': ui.createHandlerFn(this, function() {
-							return handleAction('restore');
-						})
-					}, [ _('Restore snapshot') ]),
-					'\xa0\xa0\xa0',
-					// E('button', {
-					// 	'class': 'cbi-button cbi-button-reset',
-					// 	'id': 'btn_restart',
-					// 	'click': ui.createHandlerFn(this, function() {
-					// 		return handleAction('restart');
-					// 	})
-					// }, [ _('Hard restart') ]),
-					// '\xa0\xa0\xa0',
-					E('button', {
 						'class': 'cbi-button cbi-button-save',
 						'id': 'btn_reload',
 						'click': ui.createHandlerFn(this, function() {
 							return handleAction('reload');
 						})
-					}, [ _('Soft restart') ])
+					}, [ _('Soft restart') ]),
+					'\xa0\xa0\xa0',
+					E('button', {
+						'class': 'cbi-button cbi-button-apply',
+						'id': 'btn_restore',
+						'click': ui.createHandlerFn(this, function() {
+							return handleAction('restore');
+						})
+					}, [ _('Restore snapshot') ])
 				])
 			]);
 		}, o, this);
