@@ -251,7 +251,7 @@ smartvpn_status()
 
     cd /usr/share/smartvpn
     . ./conf/network.conf
-    echo "${SMARTVPN_USERID:-NoUser} (${SMARTVPN_NETID:-null})"
+    echo "${SMARTVPN_USERID:-NoUser} (netid=${SMARTVPN_NETID:-null})"
 }
 
 smartvpn_saveipset()
