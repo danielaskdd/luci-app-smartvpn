@@ -8,7 +8,7 @@
 . /lib/functions.sh
 . /lib/functions/network.sh
 
-SMARTVPN_VER='v1.1.3'
+SMARTVPN_VER='v1.1.4'
 
 smartvpn_logger()
 {

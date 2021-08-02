@@ -213,6 +213,12 @@ handle_forwarding() {
     elif [[ "$dest" == "$SMARTVPN_FW_LANMAN_LAN_FORWARD_DEST" && "$src" == "$SMARTVPN_FW_LANMAN_LAN_FORWARD_SRC" ]]; then
         smartvpn_logger "Old forwarding rule $src->$dest found, deleting"
         uci delete firewall.$config
+    elif [[ "$dest" == "$SMARTVPN_FW_WAN_LANMAN_FORWARD_DEST" && "$src" == "$SMARTVPN_FW_WAN_LANMAN_FORWARD_SRC" ]]; then
+        smartvpn_logger "Old forwarding rule $src->$dest found, deleting"
+        uci delete firewall.$config
+    elif [[ "$dest" == "$SMARTVPN_FW_LANMAN_WAN_FORWARD_DEST" && "$src" == "$SMARTVPN_FW_LANMAN_WAN_FORWARD_SRC" ]]; then
+        smartvpn_logger "Old forwarding rule $src->$dest found, deleting"
+        uci delete firewall.$config
     fi
 }
 echo
@@ -242,6 +248,20 @@ config=`uci -q batch` <<-EOF
     commit firewall
 EOF
 uci show firewall.$config
+config=`uci -q batch` <<-EOF
+	add firewall forwarding
+	set firewall.@forwarding[-1].dest=$SMARTVPN_FW_WAN_LANMAN_FORWARD_DEST
+    set firewall.@forwarding[-1].src=$SMARTVPN_FW_WAN_LANMAN_FORWARD_SRC
+    commit firewall
+EOF
+uci show firewall.$config
+config=`uci -q batch` <<-EOF
+	add firewall forwarding
+	set firewall.@forwarding[-1].dest=$SMARTVPN_FW_LANMAN_WAN_FORWARD_DEST
+    set firewall.@forwarding[-1].src=$SMARTVPN_FW_LANMAN_WAN_FORWARD_SRC
+    commit firewall
+EOF
+uci show firewall.$config
 
 # processing firewall wan access rule
 handle_rule() {
@@ -264,17 +284,14 @@ handle_rule() {
     elif [[ "$name" == "$SMARTVPN_FW_SEUDP_NAME" ]]; then
         smartvpn_logger "Old $SMARTVPN_FW_SEUDP_NAME($config) rule found, deleting"
         uci delete firewall.$config
+    elif [[ "$name" == "$SMARTVPN_FW_PRIVATE_NAME" ]]; then
+        smartvpn_logger "Old $SMARTVPN_FW_PRIVATE_NAME($config) rule found, deleting"
+        uci delete firewall.$config
     elif [[ "$dest" == "$SMARTVPN_FW_IPSEC_DEST" && "$src" == "$SMARTVPN_FW_IPSEC_SRC" && "$proto" == "$SMARTVPN_FW_IPSEC_PROTO" ]]; then
         smartvpn_logger "Old $SMARTVPN_FW_IPSEC_NAME($config) rulefound, deleting"
         uci delete firewall.$config
     elif [[ "$dest" == "$SMARTVPN_FW_ISAKMP_DEST" && "$src" == "$SMARTVPN_FW_ISAKMP_SRC" && "$dest_port" == "$SMARTVPN_FW_ISAKMP_DEST_PORT" ]]; then
         smartvpn_logger "Old $SMARTVPN_FW_ISAKMP_NAME($config) rule found, deleting"
-        uci delete firewall.$config
-    elif [[ "$src" == "$SMARTVPN_FW_SSH_SRC" && "$dest_port" == "$SMARTVPN_FW_SSH_DEST_PORT" ]]; then
-        smartvpn_logger "Old $SMARTVPN_FW_SSH_NAME($config) rule found, deleting"
-        uci delete firewall.$config
-    elif [[ "$src" == "$SMARTVPN_FW_WEB_SRC" && "$dest_port" == "$SMARTVPN_FW_WEB_DEST_PORT" ]]; then
-        smartvpn_logger "Old $SMARTVPN_FW_WEB_NAME($config) rule found, deleting"
         uci delete firewall.$config
     fi
 }
@@ -306,25 +323,13 @@ config=`uci -q batch` <<-EOF
     commit firewall
 EOF
 uci show firewall.$config
-smartvpn_logger "Adding new $SMARTVPN_FW_SSH_NAME rule"
+smartvpn_logger "Adding new $SMARTVPN_FW_PRIVATE_NAME rule"
 config=`uci -q batch` <<-EOF
 	add firewall rule
-	set firewall.@rule[-1].name="$SMARTVPN_FW_SSH_NAME"
-    set firewall.@rule[-1].src="$SMARTVPN_FW_SSH_SRC"
-    set firewall.@rule[-1].src_ip="$SMARTVPN_FW_SSH_SRC_IP"
-    set firewall.@rule[-1].dest_port="$SMARTVPN_FW_SSH_DEST_PORT"
-    set firewall.@rule[-1].target="$SMARTVPN_FW_SSH_TARGET"
-    commit firewall
-EOF
-uci show firewall.$config
-smartvpn_logger "Adding new $SMARTVPN_FW_WEB_NAME rule"
-config=`uci -q batch` <<-EOF
-	add firewall rule
-	set firewall.@rule[-1].name="$SMARTVPN_FW_WEB_NAME"
-    set firewall.@rule[-1].src="$SMARTVPN_FW_WEB_SRC"
-    set firewall.@rule[-1].src_ip="$SMARTVPN_FW_WEB_SRC_IP"
-    set firewall.@rule[-1].dest_port="$SMARTVPN_FW_WEB_DEST_PORT"
-    set firewall.@rule[-1].target="$SMARTVPN_FW_WEB_TARGET"
+	set firewall.@rule[-1].name="$SMARTVPN_FW_PRIVATE_NAME"
+    set firewall.@rule[-1].src="$SMARTVPN_FW_PRIVATE_SRC"
+    set firewall.@rule[-1].src_ip="$SMARTVPN_FW_PRIVATE_SRC_IP"
+    set firewall.@rule[-1].target="$SMARTVPN_FW_PRIVATE_TARGET"
     commit firewall
 EOF
 uci show firewall.$config
