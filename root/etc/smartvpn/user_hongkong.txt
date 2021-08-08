@@ -1,21 +1,32 @@
 # 仅加入确认从香港访问会更快的网站
+
+# 开发资源
+.android.com
 .apple.com
-.cloudfare.com
-.com.hk
-.icloud.com
-.foxnews.com
+.bintray.com
+.google.com
+.gvt1.com
+.jetbrains.com
+.jfrog.com
+.gradle.org
 .github.com
 .github.io
 .gitlab.com
 .gitlab.io
 .gitlab-static.net
+.openwrt.org
+
+# 其它网站
+.cloudfare.com
+.com.hk
+.icloud.com
+.foxnews.com
 .ggpht.com
 .google-analytics.com
 .google-update.net
 .google.co.th
 .google.cn
 .google.co.jp
-.google.com
 .google.com.hk
 .google.com.sg
 .google.com.tw
@@ -42,7 +53,6 @@
 .kcmetercec.top
 .stackpathcdn.com
 .netflix.com
-.openwrt.org
 .stackexchange.com
 .twitter.com
 .twitter.com.au

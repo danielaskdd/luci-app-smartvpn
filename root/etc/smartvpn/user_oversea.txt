@@ -4,5 +4,6 @@
 9.9.0.0/16
 17.0.0.0/8
 23.0.0.0/8
-.github.com
-.github.io
+
+# 开发资源
+.apache.org
