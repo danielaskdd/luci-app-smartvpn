@@ -1,14 +1,26 @@
 # luci-app-smartvpn
 
-SmartVPN - select the best gateway depend on domain or network segment.
+OpenWrt package SmartVPN - Select the gateway depend on whitelist of domain or network segment. The best way to unblock gfw(great fire wall) from networ/route level.
 
 ## 概述
 
-SmartVPN插件为OpenWrt路由器提供TCP/IP层的智能路由功能，根据域名选择最佳的上网路由，路由器管辖网络范围内所有设备自由上网。支持香港和美国双路由选择，自己灵活定义规则，访问海外网站不再绕路。SmartVPN使用SoftEther构建虚拟网卡，从网络层实现智能路由，使用mwan3设置路由规则，方便灵活扩展。系统使用白名路由逻辑，内置gfwlist清单，能够自动识别绝大多数走海外路由的网站。对个别无法自动识别的网站，自己把域名添加进去即可。
+SmartVPN是一个安装在OpenWrt上的插件，为路由器提供TCP/IP层的智能路由功能，与通过SoftEther构建的VPN出口相配合，可以在网络层实现所有设备科学上网。SmartVPN系统支持三个路由出口：
 
-使用本插件需要有能力在海外搭建SoftEther服务。搭建好的SoftEthe服务可以多个家庭共享。
+* 内地出口eth0：默认互联网出口，对应的白名单域名使用119.29.29.29作为原始DNS（可通过配置修改）。
+* 香港出口tap_hub01：香港互联网出口，对应的白名单域名使用1.1.1.1作为原始DNS。
+* 海外出口tap_hub02：默认海外出口，对应的白名单域名使用8.8.8.8作为原始DNS。
 
-## 安装
+系统使用白名单方式工作，每个出口对应一个白名单，与白名单域名或ip网段吻合的主机将通过对应的路由出口访问。不在任何白名单的主机则通过默认互联网出口访问，其原始DNS也由默认互联网出口提供。海外出口内置了接近7千个内地不能访问的白名单域名，因此使用者无需对白名单做特殊设置就能够满足大部分科学上网需求。
+
+![image-20220526100218105](README.assets/image-20220526100218105.png)
+
+需要科学上网的网络设备需要把DNS和默认网关指向安装了SmartVPN插件的OpenWrt路由。当网络设备查询DNS获取ip地址时，OpenWrt上的dnsmasq服务会根据白名单向对应的原始DNS获得主机ip。dnsmasq把查询到的ip返回查询者的同时，会把ip加入到对应的ipset。这样所有访问该ip的数据包都会被打上对应的标记。路由上的mwan3插件将会识别ipset打上标记的数据包，从而判定数据包应该经由哪个出口访问外部网络。
+
+虽然海外出口可以通过OpenVPN等常用的VPN工具搭建，但考虑到这些常用的VPN通道容易受到干扰甚至屏蔽，SmartVPN采用更加安全可靠的SoftEther来搭建出口通道。上图中的tap_hub01和tap_hub02是通过SoftEther提供的两个虚拟网卡接口。SoftEther并不是用常规的VPN协议，安全性和隐蔽性都很好。有关SoftEther的内容可以通过官方网站了解：https://www.softether.org/
+
+由于SmartVPN的使用需要与SoftEther配合使用，需要有较为丰富的路由配置和网络基础知识才能操作的起来。**本项目仅提供给喜欢折腾的朋友参考**。
+
+## 安装SmartVPN
 
 ### 使用安装包安装
 
@@ -35,7 +47,7 @@ opkg install luci-app-smartvpn...    # 主程序
 opkg install luci-i18n-smartvpn...   # 语言包
 ```
 
-### 源码安装
+### 源码安装（打包到OpenWrt固件中）
 
 * 下载源代码并添加到openwrt源码目录： ./feeds/luci/application
 * 把feeds注册到到package中
@@ -69,48 +81,85 @@ make menuconfig
 # - luci-app-statistic
 ```
 
-* 如果您之前已经有配置好的SoftEther服务器配置文件可以把它替换掉以下位置的文件：./root/usr/smartvpn/service/vpn_server.config
+* 如果您你在构建OpenWrt固件的时候已经确定了SoftEther的组网设置，可以把SoftEther的配置文件替换掉一下文件：root/usr/smartvpn/service/vpn_server.config
   
-* 安正常方式编译和烧录OpengWrt固件
+* 安正常方式构建OpengWrt固件，然后把固件烧录到路由器上。
 
-### 初始设置
+### 配置SmartVPN
 
-* 在海外出口搭建SoftEther服务
+* 搭建香港和美国SoftEther服务器
 
-租用海外的VPS，在其上搭建SoftEther服务。我们只需要用到SoftEhter中和小一部分功能，只需要在VPS安装和启动SoftEther服务，建立一个虚拟Hub，然后在这个虚拟Hub上开启SecureNAT功能，让后就可以通过这台VPS访问互联网了。网上有许多SoftEther的安装教程，这里推荐一个比较简单的：[SoftEther安装配置教程](https://www.lixh.cn/archives/2647.html)。
+在香港和美国各组用一个VPS，建议VPS选择最低配置就可以了。在VPS上安装SoftEther服务。按照概述中图片所示，为服务器创建虚拟Hub，并在虚拟hub上开启SecureNAT功能，SecureNAT的ip按图示设置即可。网上有许多SoftEther的安装教程，这里推荐一个比较简单的：[SoftEther安装配置教程](https://www.lixh.cn/archives/2647.html)。
 
-* 把Smar他VPN中的SoftEther与海外出口桥接
+* 把OpenWrt上的SoftEther与香港和美国的SoftEther桥接
 
-系统安装成功后在首次启动时会给softehter服务配置好一个框架。此时softether后会建立好最少三个虚拟交换机`HUB01`、`HUB02`和`MYHUB`。其中HUB01用于与香港出口连接，通过接口`VPNHUB02`与路由器连接；HUB02用于与美国出口连接，通过接口`VPNHUB02`与路由器连接；`MYHUB`用于接受vpn拨号，让移动用户可以访问当前路由器所管辖的局域网，通过虚拟网卡`tap_myhub`路由起的`LAN`接口桥接。可以在OpenWrt的Web的接口管理页面看到。
+使用SoftEther管理客户端与OpenWrt上的SoftEther连接（首次链接无需密码）。为SoftEther创建连个虚拟hub分别为：`HUB01`和`HUB02`。为`HUB01`新建一个tap桥接设备`tap_hub01`，为`HUB02`新建一个tap桥接设备`tap_hub012`。
 
-为了建立海外访问出口，你需要在香港和美国搭建一个SoftEther服务器，然后把路由器的SoftEther服务中的HUB01和HUB02分别于香港和美国的SoftEther建立级联关系。
+把HUB01和HUB02分别与香港和美国的虚拟hub通过级联方式连接起来。这样在OpenWrt就可以通过对应的tap网卡访问香港或美国SoftEther服务器上的SecureNAT对应的ip，并通过SecureNAT访问当地的互联网了。
 
-管理SoftEther需要使用到其服务器管理工具。建立海外SoftEther服务的安装包和管理工具可以用过以下地址下载：[SoftEther下载中心](https://www.softether-download.com/cn.aspx?product=softether)。
+配置好SoftEther后重启OpenWrt路由，检查SoftEther服务是否正常，虚拟HUB01和HUB02是否正确级联到对应的海外服务器。
 
-SmartVPN已经给softehter服务进行了初始配置。使用管理工具首次连接时，连接端口需要设为1193，无需设置密码，首次连接时管理工具会要求为SoftEhter设置一个管理密码。
+* 设置tap网卡
 
-在配置好路由器上的SofTther于香港和美国的级联关系后，还需要在OpenWrt上为对应的接口（网卡）设置ip地址，这样SmartVPN才能够通过对应的接口访问海外网络。接口的ip设置需要于对应的海外网关处于同一个网段。例如例如，香港网关为`192.168.29.1`，则`VPNHUB01`接口的ip可以设置为`192.168.29.11`，掩码为`255.255.255.0`，网关为`192.168.29.1`, 网关跃点为`200`.需要注意的网关跃点不能够为默认值0，否则在SmartVPN未启用的时候，所有网络流量都会走该网关。这样就会导致访问国内网站变慢，并白白耗费掉国际出口的流量。
+进入OpenWrt路由的Interface（接口）管理界面，找到SmartVPN安装好的两个网卡接口vpnhub01和vpnhub02，分别对其进行设置：
 
-配置好ip后可以使用路由器Web管理界面的“网络诊断“页面测试以下是否可以Ping通网关的ip。
+```
+vpnhub01：
+	ip设置为：192.168.27.y   # y的建议取值范围为31～249
+	网关设置为：192.168.27.2  # 香港SoftEther的SecureNAT服务ip
+	
+vpnhub02：
+	ip设置为：192.168.29.y   # y的建议取值范围为31～249
+	网关设置为：192.168.29.1  # 美国SoftEther的SecureNAT服务ip		
+```
 
-### SmartVPN使用说明
+设置好后可以通过尝试分别ping以下两个网关的ip，能够ping说明出口路由已经正确配置。当有多个安装了SmartVPN的路由器要链接到相同的香港或美国服务器时y的取值必须不同。
 
-* 服务的启停
+> 有经验的网络管理员可以按照自己的要求来配置SoftEther，构件所需要的SoftEther组网方案，配置tap网卡的ip和网关的。例如可以多个路由共享一套海外网出口，把多个路由的局域网相互连通，组建跨地狱的“局域网”等。
 
-系统安装完成后在OpenWrt的Web管理界面中的网络菜单中会出现“SmartVPN“选项。在完成上面所述的初始设置后，点击进入“概览”页面的设置中勾选“已启用”，然后然后点击“保存并应用”按钮即启动SmartVPN。启动后页面的信息栏目可以看到启动状态和当前智能路由中命中的内地、香港和海外ip数量。您在访问还望网络时，命中的ip数量会实时更新。
+### 使用SmartVPN
 
-* 保存快照与恢复
+系统安装完成后在OpenWrt的Web管理界面中的网络菜单中会出现“SmartVPN“入口。以下是管理界面的“概览”页面：
 
-可以把当时SmartVPN匹配的ip集保存下来。日后路由器重启后可以随时恢复快照。
+![image-20220524122428829](README.assets/image-20220524122428829.png)
 
-* 软重启
+* 信息
 
-修改主机清单后可以使用软重启让清单马上生效，软重启不会清除掉当前的ip集，提升网络访问的畅顺成都。不使用软重启将会清除掉所有匹配的ip集，此时网络客户端如果使用之前DNS查询获得ip直接访问网络，可能导致无法获得正确的路由，
+`状态`显示的是SmartVPN服务的启动状态和版本。ip显示的是相应路由出口白名单中当前匹配的ip地址数量，其中snapshot显示的是最近一次保存的快照中匹配ip的数量。
+
+保存快照按钮的作用是把当前白名单的命中ip清单保存起来。恢复快照按钮的作用把之前保存的ip快照恢复到命中ip池中。软重启按钮的作用是在不清空命中ip的情况下重启服务。
+
+**建议使用软重启来让修改后的百名单生效**。因为这样可以确保之前的DNS查询命中的ip依然获得正确的路由。
+
+* 设置
+
+勾选或取消勾选“已启用”，然后点击页面底部“保存并应用”按钮可以启动或停止SmartVPN服务。通过这种方法启动Smart VPN服务后，所有白名单的命中ip清单将会被清空。此时，可以通过恢复快照功能恢复之前保存的命中ip清单。
+
+内地DNS为内地出口白名单使用的DNS服务器地址。系统安装时默认把该地址设置为DNS设置为119.29.29.29。该地址是DNSPod服务商的DNS地址。你可以把它修改为更加快速的本地宽带提供的DNS服务器地址。注意绝对不能够把它设置为OpenWrt路由器的局域网地址。
+
+初始化命令用于恢复SmartVPN的默认设置。本功能可能会冲掉现有的SoftEther和tap网卡的配置，请谨慎使用。具体的初始化命令含义如下：
+
+```
+all：恢复所有设置（相当于重新安装SmartVPN服务）
+network：仅恢复默认网络设置（tap网卡和防火墙设置）
+vpnserver：仅恢复softether服务配置
+mwan3：仅恢复mwan3服务配置
+```
+
+* 用户配置
+
+用于批量设置SmartVPN，提供给具有大量分支机构的企业快速部署之用。为保留功能，在此不做介绍。
 
 * 修改主机清单
 
-系统设置了三个主机清单：内地、香港和海外。优先级别从左到右，内地最为优先，确保清单里面的主机使用路由其默认的互联网出口；香港其次，确保经香港出口访问较快的主机不绕路，获得最快的访问速度；海外优先级别最低，内置gfwlist域名和网段清单，仅需添加少量没有收录的网站到里面即可；没有在以上三个清单中的主机则使用默认互联网出口访问网络。修改主机清单后需要“软重启”SmartVPN服务才会生效。海外主机中内置的域名和网段会随版本而更新。你修改后的主机清单会在系统升级的时候保留。
+除了“概览”页面以外，Smart VPN还有三个主机清单（白名单）设置页面：内地主机、香港主机和海外主机。
 
-主机清单中域名使用点开头，例如`.github.com`表示该匹配域名及其所有的子域名；网段CIDR格式（掩码位长度）表示，例如`23.0.0.0/8`表示以23开头的所有网络ip。
+![image-20220524230816936](README.assets/image-20220524230816936.png)
 
-注：需要了解OpenWrt智能路由或SoftEther的朋友欢迎开Issue讨论。
+SmartVPN已经在海外主机清单中内置了接近7千个被内地屏蔽的域名。因此仅当发现个别网站无法正常访问的时候才需要把对应的域名放入香港或海外主机清单中。通常会添再次添加一些从香港访问比较快的主机，从而避免绕道美国访问它们。
+
+主机清单可以使用域名或网段来表示。域名使用点开头，例如`.github.com`表示该匹配域名及其所有的子域名；网段CIDR格式（掩码位长度）表示，例如`23.0.0.0/8`表示以23开头的所有网络ip。这里填写的主机清单会在系统升级的时候保留。
+
+三个出口的白名单的优先级为从左到右，内地主机优先级最高。内地主机清单通常不需要设置，它仅用于确保之中的域名通过默认互联网出口进行访问。
+
+主机清单修改后需要重启SmartVPN服务后才会生效。建议使用“软重启”按钮来重启服务。
