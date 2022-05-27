@@ -2,7 +2,6 @@
 
 # 开发资源
 .android.com
-.apple.com
 .bintray.com
 .google.com
 .gvt1.com
@@ -67,3 +66,31 @@
 .cnn.com
 .msnbc.com
 .s-nbcnews.com
+
+.medium.com
+.githubmemory.com
+.cambridge.org
+.trafficmanager.net
+.istio.io
+.gravatar.com
+.gxnas.com
+.firecore.com
+.trakt.tv
+.github.com
+.github.io
+.postimg.org
+.githubmemory.com
+.tmdb.org
+.themoviedb.org
+.fanart.tv
+.thetvdb.com
+.theaudiodb.com
+.tvmaze.com
+.fau.de
+.osuosl.org
+.xmission.com
+.nluug.nl
+.allmusic.com
+.opensubtitles.org
+.aniview.com
+.nyt.com
