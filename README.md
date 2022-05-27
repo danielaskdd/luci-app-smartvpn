@@ -40,14 +40,16 @@ opkg install nlbwmon luci-app-nlbwmon
 opkg install collectd collectd-mod-thermal luci-app-statistics
 ```
 
-* 下载 package-release 目录下的安装包到路由器，然后运行
+* 下载 package-release 目录下的安装包到OpenWrt路由器，然后在OpenWrt上运行
 
 ```sh
-opkg install luci-app-smartvpn...    # 主程序
-opkg install luci-i18n-smartvpn...   # 语言包
+opkg install luci-app-smartvpn...        # 安装插件主题（英文界面）
+opkg install luci-i18n-smartvpn-zh-...   # 安装插件语言包（cn为简体，tw为繁体）
 ```
 
-### 源码安装（打包到OpenWrt固件中）
+### 把SmartVPN打包到OpenWrt固件中
+
+此方法需要懂得OpenWrt编译和固件烧录。
 
 * 下载源代码并添加到openwrt源码目录： ./feeds/luci/application
 * 把feeds注册到到package中
@@ -57,12 +59,12 @@ opkg install luci-i18n-smartvpn...   # 语言包
 ./scripts/feeds install -a -p luci
 ```
 
-* 配置编译模块
+* 配置OpenWrt打包的模块
 
 ```sh
 make menuconfig
 
-# 选择安装以下模块
+# SmaratVPN的运行需要把一下模块一起打包进来：
 # - dnsmasq-full（去掉dnsmasq）
 # - openssh-sftp-server
 # - ipepf3
@@ -81,9 +83,17 @@ make menuconfig
 # - luci-app-statistic
 ```
 
-* 如果您你在构建OpenWrt固件的时候已经确定了SoftEther的组网设置，可以把SoftEther的配置文件替换掉一下文件：root/usr/smartvpn/service/vpn_server.config
-  
-* 安正常方式构建OpengWrt固件，然后把固件烧录到路由器上。
+* 如果您你在构建OpenWrt固件的时候已经确定了SoftEther的设置，可以把已经验证可用的SoftEther的配置文件替换掉以下文件：root/usr/smartvpn/service/vpn_server.config
+
+经过以上设置后就可以按照正常方式构建OpenWrt固件，然后把固件烧录到路由器上。如果仅仅需要重新编译SmartVPN，可以使用以下命令对其进行单独编译：
+
+```
+make package/feeds/luci/luci-app-smartvpn/clean
+make package/feeds/luci/luci-app-smartvpn/compile
+
+# 
+# 在make之前需要确保OpenWrt的固件编译环境可以正常使用
+```
 
 ### 配置SmartVPN
 
