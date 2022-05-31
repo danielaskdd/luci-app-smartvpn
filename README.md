@@ -1,10 +1,12 @@
 # luci-app-smartvpn
 
-OpenWrt package SmartVPN - Select the gateway depend on whitelist of domain or network segment. The best way to unblock gfw(great fire wall) from networ/route level.
+SmartVPN is an OpenWrt network package, routing network trafic to specific gateway depend on predefined domain whitelists. SmartVPN is ideal for unblocking the  gfw(great fire wall) from network level. SmartVPN uses open source project SoftEther to setup cross-regional VPN, so it can also be an ideal tools for building an  vpn network for multiple homes or corporate branches.
 
-## 概述
+SmartVPN是一个OpenWrt网络插件。它根据预先定义好的域名白名单来选择流量出口网关，是搭建科学上网梯子的理想解决方案，实现局域网中的所有网络设备无需配置科学上网。Smart VPN依赖于开源项目SoftEther来实现跨地域VPN组网，因此也可以利用其实现多个家庭或企业分支机构的网络互联。
 
-SmartVPN是一个安装在OpenWrt上的插件，为路由器提供TCP/IP层的智能路由功能，与通过SoftEther构建的VPN出口相配合，可以在网络层实现所有设备科学上网。SmartVPN系统支持三个路由出口：
+## 工作原理
+
+SmartVPN通过SoftEther构建加密通道构建海外出口，并通过域名白名单控制mwan3路由规则智能路由，让访问内地、香港和海外的网络流量分别使用不同的网络出口，从而让局域网的所有网络设备都可以高效科学上网。SmartVPN系统支持三个路由出口：
 
 * 内地出口eth0：默认互联网出口，对应的白名单域名使用119.29.29.29作为原始DNS（可通过配置修改）。
 * 香港出口tap_hub01：香港互联网出口，对应的白名单域名使用1.1.1.1作为原始DNS。
@@ -158,7 +160,7 @@ mwan3：仅恢复mwan3服务配置
 
 * 用户配置
 
-用于批量设置SmartVPN，提供给具有大量分支机构的企业快速部署之用。为保留功能，在此不做介绍。
+用于批量设置SmartVPN，提供给具有大量分支机构的企业快速部署之用。企业各个分支机构可以通过SamrtVPN科学上网的同时实现分支机构之间的互联互通。本功能为保留功能，在此不做介绍。
 
 * 修改主机清单
 
