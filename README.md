@@ -24,7 +24,7 @@ SmartVPN通过SoftEther构建加密通道构建海外出口，并通过域名白
 
 ## 安装SmartVPN
 
-### 使用安装包安装
+### 方法一：使用安装包
 
 * 安装核心依赖环境
 
@@ -49,55 +49,55 @@ opkg install luci-app-smartvpn...        # 安装插件主题（英文界面）
 opkg install luci-i18n-smartvpn-zh-...   # 安装插件语言包（cn为简体，tw为繁体）
 ```
 
-### 把SmartVPN打包到OpenWrt固件中
+### 方法二：烧录到OpenWrt固件中
 
 此方法需要懂得OpenWrt编译和固件烧录。
 
+* 准备好OpenWrt编译环境，并经测试可成功构建OpenWrt固件
 * 下载源代码并添加到openwrt源码目录： ./feeds/luci/application
-* 把feeds注册到到package中
+* 把SmartVPN注册到package中
 
 ```sh
 ./scripts/feeds update luci
 ./scripts/feeds install -a -p luci
 ```
 
-* 配置OpenWrt打包的模块
+* 把SamrtVPN运行时依赖的模块添加到OpenWrt构件清单中：使用`make menuconfig`命令把以下模块添加到构件环境中：
 
 ```sh
-make menuconfig
-
-# SmaratVPN的运行需要把一下模块一起打包进来：
-# - dnsmasq-full（去掉dnsmasq）
-# - openssh-sftp-server
-# - ipepf3
-# - softether-server
-# - smartvpn
-# - mwan3
-# - nlbwmon
-# - collectd
-# - collectd-mod-exec
-# - collectd-mod-ping
-# - collectd-mod-thermal
-# - luci > translate: 简体+繁体
-# - luci-app-smatvpn
-# - luci-app-mwan3
-# - luci-app-nlbmon
-# - luci-app-statistic
+# 确保OpenWrt构件中包括SmartVPN所需要的以下模块
+- dnsmasq-full               # 需要先去掉原来默认的dnsmasq模块
+- openssh-sftp-server
+- ipepf3                     # 网络测速工具（建议添加）
+- softether-server
+- smartvpn
+- mwan3
+- nlbwmon
+- collectd
+- collectd-mod-exec
+- collectd-mod-ping
+- collectd-mod-thermal
+- luci > translate: 简体+繁体  # 让luci界面支持简体和繁体中文
+- luci-app-smatvpn
+- luci-app-mwan3
+- luci-app-nlbmon
+- luci-app-statistic
 ```
 
-* 如果您你在构建OpenWrt固件的时候已经确定了SoftEther的设置，可以把已经验证可用的SoftEther的配置文件替换掉以下文件：root/usr/smartvpn/service/vpn_server.config
+* 如果您你在构建OpenWrt固件的时候已经完成了SoftEther的组网，可以把已经验证可用的SoftEther的配置文件替换掉默认配置文件：root/usr/smartvpn/service/vpn_server.config
 
-经过以上设置后就可以按照正常方式构建OpenWrt固件，然后把固件烧录到路由器上。如果仅仅需要重新编译SmartVPN，可以使用以下命令对其进行单独编译：
+经过以上设置后就可以按照正常方式构建OpenWrt固件，然后把固件烧录到路由器上。
+
+### 单独编译安装包
+
+在已经搭建好OpenWrt编译环境的情况下，可以单独编译SmartVPN的安装包。按照方法二的说明把SmartVPN注册到package中后，运行一下命令：
 
 ```
 make package/feeds/luci/luci-app-smartvpn/clean
 make package/feeds/luci/luci-app-smartvpn/compile
-
-# 
-# 在make之前需要确保OpenWrt的固件编译环境可以正常使用
 ```
 
-### 配置SmartVPN
+## 配置SmartVPN
 
 * 搭建香港和美国SoftEther服务器
 
@@ -129,7 +129,7 @@ vpnhub02：
 
 > 有经验的网络管理员可以按照自己的要求来配置SoftEther，构件所需要的SoftEther组网方案，配置tap网卡的ip和网关的。例如可以多个路由共享一套海外网出口，把多个路由的局域网相互连通，组建跨地狱的“局域网”等。
 
-### 使用SmartVPN
+## 使用SmartVPN
 
 系统安装完成后在OpenWrt的Web管理界面中的网络菜单中会出现“SmartVPN“入口。以下是管理界面的“概览”页面：
 
