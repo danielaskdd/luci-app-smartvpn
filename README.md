@@ -1,8 +1,10 @@
 # luci-app-smartvpn
 
-SmartVPN is an OpenWrt network package, routing network trafic to specific gateway depend on predefined domain whitelists. SmartVPN is ideal for unblocking the  gfw(great fire wall) from network level. SmartVPN uses open source project SoftEther to setup cross-regional VPN, so it can also be an ideal tools for building an  vpn network for multiple homes or corporate branches.
+SmartVPN is an OpenWrt network extension package. It uses SoftEther service to set up cross-regional VPN, and routing network traffic by predefined domain whitelists. SmartVPN is ideal for unblocking the  GFW(great firewall) from the network layer.  It also can be used to connect multiple branch office‘s networks with public wideband networks.
 
-SmartVPN是一个OpenWrt网络插件。它根据预先定义好的域名白名单来选择流量出口网关，是搭建科学上网梯子的理想解决方案，实现局域网中的所有网络设备无需配置科学上网。Smart VPN依赖于开源项目SoftEther来实现跨地域VPN组网，因此也可以利用其实现多个家庭或企业分支机构的网络互联。
+SmartVPN是一个OpenWrt路由插件，其核心功能是通过SoftEther进行跨地域组网，并通过域名白名单来实现智能路由。可通过它实现多出口的海外网络加速访问，或让企业多个分支机构之间通过普通的公共宽带网络实现互联互通。
+
+SmartVPN是让局域网内各类网络设备无需配置科学上网的理想解工具。本项目成功应用于多个企业构建个人和公司之前的远程办公环境，并为公司开发人员访问海外开发资源提供极大的便利。
 
 ## 工作原理
 
