@@ -1,13 +1,2 @@
 # 仅加入确认必须走内地出口的网站
 .askdd.org
-.bilibili.com
-.com.cn
-.163.com
-.baidu.com
-.douyin.com
-.qq.com
-.speedtest.net
-.taobao.com
-.tmall.com
-.toutiao.com
-.weibo.com

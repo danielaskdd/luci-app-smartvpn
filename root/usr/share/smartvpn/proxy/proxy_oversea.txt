@@ -1,52 +1,6 @@
 # 2021年7月4日把gfwlist清单合并到本清单中
 # net 网段格式: xxx.xxx.xxx.xxx/yy
 # domain 域名格式: 必须以点开头
-31.13.24.0/21
-31.13.64.0/18
-35.231.233.0/16
-45.64.40.0/22
-52.85.83.0/24
-62.220.144.0/20
-64.63.0.0/18
-64.18.0.0/20
-64.233.160.0/19
-66.102.0.0/20
-66.220.144.0/20
-66.249.64.0/19
-66.249.80.0/20
-69.63.176.0/20
-69.171.224.0/19
-72.14.192.0/18
-74.119.76.0/22
-74.125.0.0/16
-74.125.232.0/24
-103.4.96.0/22
-103.252.112.0/23
-103.252.114.0/23
-104.100.0.0/16
-104.244.0.0/16
-108.177.8.0/21
-129.134.0.0/16
-149.112.0.0/16
-151.101.0.0/16
-152.199.0.0/16
-157.240.0.0/16
-172.217.0.0/16
-173.252.64.0/18
-173.194.0.0/16
-173.194.122.0/24
-179.60.192.0/22
-184.0.0.0/8
-185.60.216.0/22
-192.133.76.0/22
-199.16.156.0/22
-199.59.148.0/22
-204.15.20.0/22
-207.126.144.0/20
-208.67.0.0/16
-209.85.128.0/17
-216.58.0.0/16
-216.239.32.0/19
 .000webhost.com
 .030buy.com
 .0rz.tw
@@ -103,6 +57,7 @@
 .24smile.org
 .25u.com
 .2lipstube.com
+.2o7.net
 .2shared.com
 .2waky.com
 .3-a.net
@@ -208,6 +163,7 @@
 .acmedia365.com
 .acmetoy.com
 .acnw.com.au
+.acrobits.net
 .actfortibet.org
 .actimes.com.au
 .activpn.com
@@ -222,6 +178,7 @@
 .adpl.org.hk
 .ads-twitter.com
 .adsense.com
+.adsymptotic.com
 .adult-sex-games.com
 .adult.friendfinder.com
 .adultfriendfinder.com
@@ -244,6 +201,7 @@
 .ai-kan.net
 .ai-wen.net
 .ai.binwang.me
+.ai.com
 .ai.google
 .aiph.net
 .airasia.com
@@ -256,6 +214,7 @@
 .aiweiwei.com
 .aiweiweiblog.com
 .akademiye.org
+.akamaiedge.net
 .akamaihd.net
 .akiba-online.com
 .akiba-web.com
@@ -288,6 +247,7 @@
 .allinfa.com
 .alljackpotscasino.com
 .allmovie.com
+.allmusic.com
 .allowed.org
 .almasdarnews.com
 .almostmy.com
@@ -304,6 +264,8 @@
 .amazon.co.jp
 .amazon.com
 .amazonaws.com
+.amazontrust.com
+.amcplus.com
 .ameblo.jp
 .americangreencard.com
 .americanunfinished.com
@@ -335,6 +297,7 @@
 .angularjs.org
 .animecrazy.net
 .aniscartujo.com
+.aniview.com
 .annatam.com
 .anobii.com
 .anonproxy.eu
@@ -365,17 +328,15 @@
 .apartments.com
 .apat1989.org
 .apetube.com
-.api-secure.recaptcha.net
-.api-verify.recaptcha.net
 .api.ai
 .api.dropboxapi.com
 .api.linksalpha.com
 .api.proxlet.com
 .api.pureapk.com
-.api.recaptcha.net
 .apiary.io
 .apidocs.linksalpha.com
 .apigee.com
+.apis.map.qq.com
 .apk-dl.com
 .apk.support
 .apkcombo.com
@@ -443,6 +404,7 @@
 .assembla.com
 .assets.bwbx.io
 .assimp.org
+.asterisk.org
 .astrill.com
 .atc.org.au
 .atchinese.com
@@ -453,6 +415,7 @@
 .atlaspost.com
 .atnext.com
 .auntology.fandom.com
+.auth0.com
 .authorizeddns.net
 .authorizeddns.org
 .authorizeddns.us
@@ -651,6 +614,7 @@
 .bitvise.com
 .bitz.ai
 .bizhat.com
+.bizible.com
 .bjnewlife.org
 .bjs.org
 .bjzc.org
@@ -911,6 +875,7 @@
 .cam4.com
 .cam4.jp
 .cam4.sg
+.cambridge.org
 .camdough.com
 .camfrog.com
 .campaignforuyghurs.org
@@ -977,6 +942,7 @@
 .cdn-apple.com
 .cdn-images.mailchimp.com
 .cdn.assets.lfpcontent.com
+.cdn.cookielaw.org
 .cdn.helixstudios.net
 .cdn.printfriendly.com
 .cdn.seatguru.com
@@ -1172,6 +1138,7 @@
 .cliphunter.com
 .cloakpoint.com
 .cloud.mail.ru
+.cloudfare.com
 .cloudflare.com
 .cloudfront.com
 .cloudfront.net
@@ -1223,10 +1190,13 @@
 .codeshare.io
 .codeskulptor.org
 .coin2co.in
+.coinbase.com
 .coinbene.com
 .coinegg.com
 .coinex.com
+.coingecko.com
 .coingi.com
+.coinmarketcap.com
 .coinrail.co.kr
 .cointiger.com
 .cointobe.com
@@ -1239,6 +1209,7 @@
 .commandarms.com
 .commentshk.com
 .communistcrimes.org
+.community.synology.com
 .community.windy.com
 .communitychoicecu.com
 .comparitech.com
@@ -1264,6 +1235,7 @@
 .costco.com
 .cotweet.com
 .counter.social
+.counterpath.com
 .coursehero.com
 .coverproxy.com
 .cpj.org
@@ -1298,6 +1270,7 @@
 .csdparty.com
 .csis.org
 .csmonitor.com
+.csrpswitch.com
 .css.pixnet.in
 .csuchen.de
 .csw.org.uk
@@ -1419,6 +1392,7 @@
 .decodet.co
 .deepmind.com
 .deezer.com
+.defidaonews.com
 .definebabe.com
 .deja.com
 .delcamp.net
@@ -1439,6 +1413,7 @@
 .destroy-china.jp
 .destroytwitter.com
 .deutsche-welle.de
+.developer.apple.com
 .developers.box.net
 .deviantart.com
 .deviantart.net
@@ -1501,7 +1476,6 @@
 .dnsrd.com
 .dnssec.net
 .dnvod.tv
-.docker.com
 .doctorvoice.org
 .documentingreality.com
 .dogfartnetwork.com
@@ -1519,6 +1493,7 @@
 .dongyangjing.com
 .dontfilter.us
 .dontmovetochina.com
+.doodles.ap
 .dorjeshugden.com
 .dotnettwitter.com
 .dotomi.com
@@ -1549,6 +1524,7 @@
 .dreamcheeky.com
 .drepung.org
 .drgan.net
+.driftt.com
 .drmingxia.org
 .dropbooks.tv
 .dropbox.com
@@ -1641,6 +1617,7 @@
 .economist.com
 .ecsm.vs.com
 .edgecastcdn.net
+.edgecastdns.net
 .edicypages.com
 .edmontonchina.cn
 .edmontonservice.com
@@ -1660,6 +1637,7 @@
 .eireinikotaerukai.com
 .eisbb.com
 .eksisozluk.com
+.elastic.co
 .electionsmeter.com
 .elgoog.im
 .ellawine.org
@@ -1686,6 +1664,7 @@
 .englishfromengland.co.uk
 .englishpen.org
 .enlighten.org.tw
+.ens.domains
 .entermap.com
 .environment.google
 .epa.gov.tw
@@ -1834,6 +1813,7 @@
 .familyfed.org
 .famunion.com
 .fan-qiang.com
+.fanart.tv
 .fangbinxing.com
 .fangeming.com
 .fangeqiang.com
@@ -1866,6 +1846,7 @@
 .fastssh.com
 .faststone.org
 .fatbtc.com
+.fau.de
 .favotter.net
 .favstar.fm
 .fawanghuihui.org
@@ -1929,6 +1910,7 @@
 .finler.net
 .firearmsworld.net
 .firebaseio.com
+.firecore.com
 .fireofliberty.org
 .firetweet.io
 .firstfivefollowers.com
@@ -1981,6 +1963,7 @@
 .fourthinternational.org
 .foxdie.us
 .foxgay.com
+.foxnews.com
 .foxsub.com
 .foxtang.com
 .fpmt-osel.org
@@ -2036,10 +2019,13 @@
 .freeoda.com
 .freeopenvpn.com
 .freeoz.org
+.freepbx.com
+.freepbx.org
 .freeproxy.net
 .freeproxyserver.ca
 .freeproxyserver.net
 .freesafeip.com
+.freesbc.com
 .freessh.us
 .freetcp.com
 .freetibet.net
@@ -2079,6 +2065,7 @@
 .ftpserver.biz
 .ftv.com.tw
 .ftvnews.com.tw
+.fubo.tv
 .fucd.com
 .fuckcnnic.net
 .fuckgfw.org
@@ -2110,6 +2097,7 @@
 .g-queen.com
 .g.co
 .g0v.social
+.g2crowd.com
 .g6hentai.com
 .gab.com
 .gabocorp.com
@@ -2203,6 +2191,7 @@
 .gfw.press
 .ggpht.com
 .ggssl.com
+.ghcr.io
 .ghidra-sre.org
 .ghostpath.com
 .ghut.org
@@ -2218,7 +2207,12 @@
 .github.io
 .githubapp.com
 .githubassets.com
+.githubmemory.com
 .githubusercontent.com
+.gitkraken.com
+.gitlab-static.net
+.gitlab.com
+.gitlab.io
 .gizlen.net
 .gjczz.com
 .glass8.eu
@@ -2246,6 +2240,7 @@
 .gnci.org.hk
 .gnews.org
 .gnu.org
+.go-mpulse.net
 .go-pki.com
 .go.nesnode.com
 .go141.com
@@ -2292,6 +2287,8 @@
 .goodtv.com.tw
 .goodtv.tv
 .goofind.com
+.google-analytics.com
+.google-update.net
 .google.ad
 .google.ae
 .google.al
@@ -2367,6 +2364,7 @@
 .google.com.gt
 .google.com.hk
 .google.com.jm
+.google.com.jp
 .google.com.kh
 .google.com.kw
 .google.com.lb
@@ -2457,6 +2455,7 @@
 .google.no
 .google.nr
 .google.nu
+.google.org
 .google.pl
 .google.pn
 .google.ps
@@ -2486,6 +2485,8 @@
 .google.vg
 .google.vu
 .google.ws
+.googleadservices.com
+.googleanalytics.com
 .googleapis.cn
 .googleapis.com
 .googleapps.com
@@ -2510,9 +2511,14 @@
 .googlepagecreator.com
 .googleplay.com
 .googleplus.com
+.googlepreview.com
 .googlescholar.comUSA
 .googlesile.com
 .googlesource.com
+.googlestatics1.com
+.googlesyndication.com
+.googletagmanager.com
+.googletagservices.com
 .googleusercontent.com
 .googlevideo.com
 .googleweblight.com
@@ -2541,6 +2547,7 @@
 .grangorz.org
 .graphis.ne.jp
 .graphql.org
+.gravatar.com
 .greasespot.net
 .great-firewall.com
 .great-roc.org
@@ -2599,6 +2606,7 @@
 .gvt3.com
 .gwins.org
 .gwtproject.org
+.gxnas.com
 .gyalwarinpoche.com
 .gyatsostudio.com
 .gzm.tv
@@ -2637,6 +2645,7 @@
 .hbg.com
 .hbo.com
 .hbomax.com
+.hcaptcha.com
 .hclips.com
 .hd.stheadline.com
 .hd1080.org
@@ -2834,6 +2843,7 @@
 .hrtsea.com
 .hrw.org
 .hrweb.org
+.hsforms.com
 .hsjp.net
 .hsselite.com
 .hst.net.tw
@@ -2993,6 +3003,7 @@
 .indiemerch.com
 .info-graf.fr
 .informer.com
+.infura.io
 .initiativesforchina.org
 .inkui.com
 .inmediahk.net
@@ -3216,7 +3227,9 @@
 .kawaiikawaii.jp
 .kawase.com
 .kb.monitorware.com
+.kb.synology.com
 .kba-tx.org
+.kcmetercec.top
 .kcoolonline.com
 .kebrum.com
 .kechara.com
@@ -3318,6 +3331,7 @@
 .lastfm.es
 .lataayoutube.com
 .latelinenews.com
+.launchpad.net
 .lausan.hk
 .lbank.info
 .ld.hao123img.com
@@ -3380,6 +3394,7 @@
 .linglingfa.com
 .lingvodics.com
 .link-o-rama.com
+.linkedin.com
 .linkideo.com
 .links.org.au
 .linkuswell.com
@@ -3534,6 +3549,7 @@
 .maturejp.com
 .maven.org
 .maxing.jp
+.maxymiser.net
 .mayimayi.com
 .mcadforums.com
 .mcaf.ee
@@ -3551,6 +3567,7 @@
 .mediafreakcity.com
 .medium.com
 .meetav.com
+.meetecho.com
 .meetup.com
 .mefeedia.com
 .mefound.com
@@ -3641,6 +3658,7 @@
 .minzhuzhanxian.com
 .minzhuzhongguo.org
 .miroguide.com
+.mirror.xyz
 .mirrorbooks.com
 .mirrormedia.mg
 .misstar.com
@@ -3785,6 +3803,7 @@
 .mynumber.org
 .myparagliding.com
 .mypicture.info
+.mypinata.cloud
 .mypop3.net
 .mypop3.org
 .mypopescu.com
@@ -3856,6 +3875,7 @@
 .network54.com
 .networkedblogs.com
 .networktunnel.net
+.networkworld.com
 .neverforget8964.org
 .new-3lunch.net
 .new-akiba.com
@@ -3928,6 +3948,8 @@
 .ninjacloak.com
 .ninjaproxy.ninja
 .nintendium.com
+.nintendo.com
+.nintendo.net
 .ninth.biz
 .nitter.cc
 .nitter.net
@@ -3939,6 +3961,7 @@
 .nko.navy.mil
 .nlfreevpn.com
 .nlog.cc
+.nluug.nl
 .nmsl.website
 .nnews.eu
 .no-ip.org
@@ -4075,6 +4098,7 @@
 .onedrive.live.com
 .onedumb.com
 .onejav.com
+.oneplusnews.com
 .onion.city
 .online.hk
 .online.recoveryversion.org
@@ -4092,22 +4116,31 @@
 .onthehunt.com
 .ontrac.com
 .oopsforum.com
+.opc.askdd.org
 .open.com.hk
+.openai.com
 .openallweb.com
+.openbittorrent.com
 .opendemocracy.net
 .opendn.xyz
 .openervpn.in
 .openid.net
 .openleaks.org
+.opensea.io
 .opensource.google
+.opensubtitles.org
 .opentech.fund
+.openvidu.io
 .openvpn.net
 .openvpn.org
 .openwebster.com
+.openwrt.ai
 .openwrt.org
 .openwrt.org.cn
 .opml.radiotime.com
 .opus-gaming.com
+.oraclecloud.com
+.oracleinfinity.io
 .ordns.he.net
 .organcare.org.tw
 .organharvestinvestigation.net
@@ -4122,6 +4155,7 @@
 .orzistic.org
 .osfoora.com
 .osikko.jp
+.osuosl.org
 .otcbtc.com
 .otnd.org
 .otto.de
@@ -4154,6 +4188,7 @@
 .pacopacomama.com
 .padmanet.com
 .page.bid.yahoo.com
+.page.link
 .page2rss.com
 .pagodabox.com
 .paid2youtube.com
@@ -4176,6 +4211,7 @@
 .paperb.us
 .paradisehill.cc
 .paradisepoker.com
+.parallels.com
 .parkansky.com
 .parler.com
 .parosproxy.org
@@ -4348,6 +4384,7 @@
 .post76.com
 .post852.com
 .postadult.com
+.postfix.org
 .postimg.org
 .posts.careerengine.us
 .potato.im
@@ -4365,6 +4402,7 @@
 .prestige-av.com
 .prestigecasino.com
 .pride.google
+.primevideo.com
 .prism-break.org
 .prisoneralert.com
 .pritunl.com
@@ -4378,7 +4416,6 @@
 .privatevpn.com
 .procopytips.com
 .programastwitter.com
-.programmersought.com
 .project-syndicate.org
 .prosiben.de
 .protonvpn.com
@@ -4423,6 +4460,7 @@
 .pts.org.tw
 .ptt.cc
 .pttvan.org
+.pubmine.com
 .pubu.com.tw
 .puffinbrowser.com
 .puffstore.com
@@ -4450,6 +4488,7 @@
 .pythonhackers.com
 .pytorch.org
 .qanote.com
+.qemu.org
 .qgirl.com.tw
 .qhigh.com
 .qi-gong.me
@@ -4511,6 +4550,7 @@
 .rapidgator.net
 .rapidmoviez.com
 .rapidvpn.com
+.rarbg.to
 .rarbgprx.org
 .raremovie.cc
 .raremovie.net
@@ -4536,6 +4576,7 @@
 .realsexpass.com
 .reason.com
 .rebatesrule.net
+.recaptcha.net
 .recordhistory.org
 .recovery.org.tw
 .recoveryversion.com.tw
@@ -4553,6 +4594,7 @@
 .redtube.com
 .referer.us
 .reflectivecode.com
+.regex101.com
 .registry.google
 .relakks.com
 .relaxbbs.com
@@ -4661,6 +4703,7 @@
 .salvation.org.hk
 .samair.ru
 .sambhota.org
+.sangoma.com
 .sankei.com
 .sanmin.com.tw
 .sapikachu.net
@@ -4685,6 +4728,7 @@
 .scache2.vzw.com
 .scasino.com
 .schema.org
+.schmoozecom.com
 .schooltunnel.net
 .sciencenets.com
 .scieron.com
@@ -4812,6 +4856,7 @@
 .sidelinessportseatery.com
 .sierrafriendsoftibet.org
 .signal.org
+.signalwire.com
 .sijihuisuo.club
 .sijihuisuo.com
 .silkbook.com
@@ -4896,6 +4941,7 @@
 .softether-download.com
 .softether.co.jp
 .softether.com
+.softether.net
 .softether.org
 .softfamous.com
 .softnology.biz
@@ -4991,7 +5037,10 @@
 .sstmlt.moe
 .sstmlt.net
 .ssyoutube.com
+.stackexchange.com
 .stackoverflow.com
+.stackpath.com
+.stackpathcdn.com
 .stage64.hk
 .standupfortibet.org
 .standwithhk.org
@@ -5006,7 +5055,6 @@
 .static.comico.tw
 .static.shemalez.com
 .static.techspot.com
-.static01.nyt.com
 .staticflickr.com
 .statueofdemocracy.org
 .stboy.net
@@ -5051,6 +5099,7 @@
 .stupidvideos.com
 .subacme.rerouted.org
 .subito.it
+.substack.com
 .successfn.com
 .suche.gmx.net
 .sugarsync.com
@@ -5078,6 +5127,7 @@
 .superuser.com
 .supervpn.net
 .superzooi.com
+.supes.top
 .suppig.net
 .suprememastertv.com
 .surfeasy.com
@@ -5220,6 +5270,7 @@
 .thb.gov.tw
 .theatlantic.com
 .theatrum-belli.com
+.theaudiodb.com
 .thebcomplex.com
 .theblaze.com
 .theblemish.com
@@ -5244,8 +5295,10 @@
 .thehousenews.com
 .thehun.net
 .theinitium.com
+.themoviedb.org
 .thenewslens.com
 .theninjaproxy.org
+.thepaper.cn
 .thepiratebay.org
 .theporndude.com
 .theportalwiki.com
@@ -5260,6 +5313,7 @@
 .thetibetpost.com
 .thetinhat.com
 .thetrotskymovie.com
+.thetvdb.com
 .thevivekspot.com
 .thewgo.org
 .theync.com
@@ -5390,6 +5444,7 @@
 .tl.gd
 .tma.co.jp
 .tmagazine.com
+.tmdb.org
 .tmdfish.com
 .tmi.me
 .tmpp.org
@@ -5451,7 +5506,9 @@
 .tpi.org.tw
 .tracfone.com
 .traffichaus.com
+.trakt.tv
 .trans.wenweipo.com
+.transak.com
 .transparency.org
 .treemall.com.tw
 .trendsmap.com
@@ -5466,6 +5523,7 @@
 .trtc.com.tw
 .trucchifacebook.com
 .truebuddha-md.org
+.trueconf.com
 .trulyergonomic.com
 .truth101.co.tv
 .truthontour.org
@@ -5520,6 +5578,7 @@
 .tvants.com
 .tvboxnow.com
 .tvider.com
+.tvmaze.com
 .tvmost.com.hk
 .tvplayvideos.com
 .tvunetworks.com
@@ -5618,6 +5677,7 @@
 .twittbot.net
 .twitter-icon.com
 .twitter.com
+.twitter.com.au
 .twitter.jp
 .twitter4j.org
 .twittercounter.com
@@ -5651,12 +5711,14 @@
 .txxx.com
 .tycool.com
 .typepad.com
+.typora.io
 .u15.info
 .u9un.com
 .ub0.cc
 .ubddns.org
 .uberproxy.net
 .ubervu.com
+.ubuntu.com
 .uc-japan.org
 .ucdc1998.org
 .uchicago.edu
@@ -5774,6 +5836,7 @@
 .v2fly.org
 .v2ray.com
 .v2raycn.com
+.v2rayssr.com
 .v2raytech.com
 .valeursactuelles.com
 .van001.com
@@ -5838,6 +5901,7 @@
 .vipchina.com
 .virtualrealporn.com
 .visibletweets.com
+.visual-paradigm.com
 .vital247.org
 .viu.com
 .viu.tv
@@ -5871,6 +5935,7 @@
 .vod-abematv.akamaized.net
 .vod.wwe.com
 .voicettank.org
+.voip-info.org
 .vongutenberg.com
 .vot.org
 .vovo2000.com
@@ -5983,6 +6048,7 @@
 .webjb.org
 .weblagu.com
 .webmproject.org
+.webpkgcache.com
 .webproxy.hu
 .webproxy.ru
 .webproxy.tw
@@ -6058,6 +6124,7 @@
 .wiki.moegirl.org
 .wiki.oauth.net
 .wiki.phonegap.com
+.wikibooks.org
 .wikileaks-forum.com
 .wikileaks.ch
 .wikileaks.com
@@ -6204,7 +6271,9 @@
 .wzyboy.im
 .x-art.com
 .x-berry.com
+.x-meta.com
 .x-wall.org
+.x.com
 .x.company
 .x1949x.com
 .x24hr.com
@@ -6255,6 +6324,7 @@
 .xlfmtalk.com
 .xlfmwz.info
 .xm.com
+.xmission.com
 .xml-training-guide.com
 .xmovies.com
 .xn--4gq171p.com
@@ -6365,6 +6435,8 @@
 .youtu.be
 .youtube-nocookie.com
 .youtube.com
+.youtube.com.br
+.youtube.com.my
 .youtubecn.com
 .youtubeeducation.com
 .youtubegaming.com
